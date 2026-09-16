@@ -110,6 +110,19 @@ def filter_func_wan_video(name: str) -> bool:
     )
     return pattern.match(name) is not None
 
+def filter_func_lingbot_va(name: str) -> bool:
+    """Filter function for lingbot-va's shared-backbone Wan2.2-derived transformer.
+
+    Unlike stock Wan2.2 (40 blocks), this model has 30 `blocks`, shared between
+    the video and action passes. Also keeps the action-specific heads
+    (`action_embedder`, `action_proj_out`, `condition_embedder_action`) in
+    original precision since they drive robot control directly.
+    """
+    pattern = re.compile(
+        r".*(patch_embedding|condition_embedder|condition_embedder_action|proj_out"
+        r"|action_embedder|action_proj_out|blocks\.(0|1|2|27|28|29)\.).*"
+    )
+    return pattern.match(name) is not None
 
 # Qwen-Image's transformer has 60 ``transformer_blocks``. The recipe quantizes
 # only those blocks while keeping the first two and last two -- and everything

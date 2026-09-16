@@ -41,6 +41,7 @@ except ImportError:
 from utils import (
     filter_func_default,
     filter_func_flux_dev,
+    filter_func_lingbot_va,
     filter_func_ltx2_vae,
     filter_func_ltx_video,
     filter_func_qwen_image,
@@ -63,8 +64,8 @@ class ModelType(str, Enum):
     LTX2 = "ltx-2"
     WAN22_T2V_14b = "wan2.2-t2v-14b"
     WAN22_T2V_5b = "wan2.2-t2v-5b"
+    LINGBOT_VA = "lingbot-va"
     QWEN_IMAGE = "qwen-image"
-
 
 _FILTER_FUNC_MAP: dict[ModelType, Callable[[str], bool]] = {
     ModelType.FLUX_DEV: filter_func_flux_dev,
@@ -73,6 +74,7 @@ _FILTER_FUNC_MAP: dict[ModelType, Callable[[str], bool]] = {
     ModelType.LTX2: filter_func_ltx_video,
     ModelType.WAN22_T2V_14b: filter_func_wan_video,
     ModelType.WAN22_T2V_5b: filter_func_wan_video,
+    ModelType.LINGBOT_VA: filter_func_lingbot_va,
     ModelType.QWEN_IMAGE: filter_func_qwen_image,
 }
 
@@ -106,6 +108,7 @@ MODEL_REGISTRY: dict[ModelType, str] = {
     ModelType.LTX2: "Lightricks/LTX-2",
     ModelType.WAN22_T2V_14b: "Wan-AI/Wan2.2-T2V-A14B-Diffusers",
     ModelType.WAN22_T2V_5b: "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+    ModelType.LINGBOT_VA: "robbyant/lingbot-va-base",
     ModelType.QWEN_IMAGE: "Qwen/Qwen-Image",
 }
 
@@ -121,6 +124,7 @@ MODEL_PIPELINE: dict[ModelType, type[DiffusionPipeline] | None] = {
     ModelType.LTX2: None,
     ModelType.WAN22_T2V_14b: WanPipeline,
     ModelType.WAN22_T2V_5b: WanPipeline,
+    ModelType.LINGBOT_VA: None,
     ModelType.QWEN_IMAGE: QwenImagePipeline,
 }
 
@@ -237,6 +241,23 @@ MODEL_DEFAULTS: dict[ModelType, dict[str, Any]] = {
                 "，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，"  # noqa: RUF001
                 "手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走"  # noqa: RUF001
             ),
+        },
+    },
+    ModelType.LINGBOT_VA: {
+        "backbone": "transformer",
+        "dataset": _OPENVID_DATASET,
+        "inference_extra_args": {
+            # Mirrors wan_va/configs/va_robotwin_cfg.py (RoboTwin-2.0 eval config).
+            "height": 256,
+            "width": 320,
+            "frame_chunk_size": 2,
+            "action_dim": 30,
+            "action_per_frame": 16,
+            "attn_window": 72,
+            "guidance_scale": 5,
+            "action_guidance_scale": 1,
+            "num_inference_steps": 25,
+            "action_num_inference_steps": 50,
         },
     },
     ModelType.QWEN_IMAGE: {

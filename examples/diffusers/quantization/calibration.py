@@ -18,12 +18,20 @@ import warnings
 from pathlib import Path
 from typing import Any
 
+import numpy as np
 from models_utils import MODEL_DEFAULTS, ModelType
 from pipeline_manager import PipelineManager
 from quantize_config import CalibrationConfig
 from tqdm import tqdm
 from utils import load_calib_prompts
 
+_LINGBOT_VA_DUMMY_PROMPT = "a robot arm manipulating objects on a table"
+
+def _make_lingbot_va_dummy_obs(job_config) -> dict:
+    return {
+        cam_key: np.zeros((480, 640, 3), dtype=np.uint8)
+        for cam_key in job_config.obs_cam_keys
+    }
 
 class Calibrator:
     """Handles model calibration for quantization."""
@@ -95,6 +103,9 @@ class Calibrator:
                 elif self.model_type in [ModelType.WAN22_T2V_14b, ModelType.WAN22_T2V_5b]:
                     # Special handling for WAN video models
                     self._run_wan_video_calibration(prompt_batch, extra_args)
+                elif self.model_type == ModelType.LINGBOT_VA:
+                    # lingbot-va: dummy synthetic obs, no real calibration data yet
+                    self._run_lingbot_va_calibration(prompt_batch, extra_args)
                 else:
                     common_args = {
                         "prompt": prompt_batch,
@@ -120,6 +131,18 @@ class Calibrator:
         kwargs["num_inference_steps"] = self.config.n_steps
 
         self.pipe(prompt=prompt_batch, **kwargs).frames
+
+    def _run_lingbot_va_calibration(
+        self, prompt_batch: list[str], extra_args: dict[str, Any]
+    ) -> None:
+        job_config = self.pipe.va_server.job_config
+        # prompt_batch (real OpenVid-1M captions) is unused here: those
+        # captions are full-sentence length and VA_Server._reset() builds its
+        # save-directory name directly from the raw prompt string with no
+        # truncation, so long captions blow past OS filename length limits.
+        prompt = _LINGBOT_VA_DUMMY_PROMPT
+        cam_images = _make_lingbot_va_dummy_obs(job_config)
+        self.pipe.generate(prompt, cam_images)
 
     def _run_ltx2_calibration(self, prompt_batch: list[str], extra_args: dict[str, Any]) -> None:
         warnings.warn(

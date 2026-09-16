@@ -14,6 +14,7 @@
 # limitations under the License.
 
 import logging
+import sys
 import warnings
 from collections.abc import Iterator
 from typing import Any
@@ -99,6 +100,11 @@ class PipelineManager:
                 self.pipe = self._create_ltx2_pipeline()
                 self.logger.info("LTX-2 pipeline created successfully")
                 return self.pipe
+            
+            if self.config.model_type == ModelType.LINGBOT_VA:
+                self.pipe = self._create_lingbot_va_pipeline()
+                self.logger.info("lingbot-va pipeline created successfully")
+                return self.pipe
 
             pipeline_cls = MODEL_PIPELINE[self.config.model_type]
             if pipeline_cls is None:
@@ -139,8 +145,8 @@ class PipelineManager:
         if not self.pipe:
             raise RuntimeError("Pipeline not created. Call create_pipeline() first.")
 
-        if self.config.model_type == ModelType.LTX2:
-            self.logger.info("Skipping device setup for LTX-2 pipeline (handled internally)")
+        if self.config.model_type in (ModelType.LTX2, ModelType.LINGBOT_VA):
+            self.logger.info("Skipping device setup for LTX-2/lingbot-va pipeline (handled internally)")
             return
 
         if self.config.cpu_offloading:
@@ -266,7 +272,82 @@ class PipelineManager:
         pipeline_kwargs.update(params)
         return TI2VidTwoStagesPipeline(**pipeline_kwargs)
 
+    def _create_lingbot_va_pipeline(self) -> Any:
+        params = dict(self.config.extra_params)
+        lingbot_va_repo = params.pop("lingbot_va_repo", None)
+        if not lingbot_va_repo:
+            raise ValueError(
+                "Missing required extra_param: lingbot_va_repo "
+                "(pass --extra-param lingbot_va_repo=/path/to/lingbot-va)"
+            )
+        if lingbot_va_repo not in sys.path:
+            sys.path.append(lingbot_va_repo)
+
+        from wan_va.configs import VA_CONFIGS
+
+        # wan_va_server.py does `from utils import (...)` expecting its own
+        # wan_va/utils/ package. Python checks sys.modules (by name) before
+        # ever consulting sys.path, and even a fresh lookup would find this
+        # repo's own quantization/utils.py first via sys.path[0] (the running
+        # script's own directory), regardless of what we append afterward. So
+        # we manually build the wan_va/utils package module and inject it
+        # into sys.modules["utils"] before triggering the import, then
+        # restore our own utils.py afterward.
+        import importlib.util
+        import os as _os
+
+        wan_va_utils_dir = _os.path.join(lingbot_va_repo, "wan_va", "utils")
+        spec = importlib.util.spec_from_file_location(
+            "utils",
+            _os.path.join(wan_va_utils_dir, "__init__.py"),
+            submodule_search_locations=[wan_va_utils_dir],
+        )
+        wan_va_utils_module = importlib.util.module_from_spec(spec)
+
+        our_utils_module = sys.modules.get("utils")
+        sys.modules["utils"] = wan_va_utils_module
+        try:
+            spec.loader.exec_module(wan_va_utils_module)
+            from wan_va.wan_va_server import VA_Server
+        finally:
+            if our_utils_module is not None:
+                sys.modules["utils"] = our_utils_module
+            else:
+                sys.modules.pop("utils", None)
+
+        job_config = VA_CONFIGS["robotwin"]
+        job_config.wan22_pretrained_model_name_or_path = self.config.model_path
+        job_config.local_rank = 0
+        job_config.param_dtype = self.config.model_dtype.get(
+            "transformer", self.config.model_dtype["default"]
+        )
+
+        va_server = VA_Server(job_config)
+
+        self._transformer = va_server.transformer
+        return LingbotVAPipe(va_server)
+
     def print_quant_summary(self):
         for name, backbone in self.iter_backbones():
             self.logger.info(f"{name} quantization info:")
             mtq.print_quant_summary(backbone)
+
+
+class LingbotVAPipe:
+    """Minimal calibration-time wrapper around a real VA_Server instance.
+
+    Drives calibration through VA_Server's own public `infer()` method so the
+    forward passes (both action_mode=False and action_mode=True) match
+    production inference exactly, rather than reimplementing the denoise loop.
+    """
+
+    def __init__(self, va_server) -> None:
+        self.va_server = va_server
+        self.transformer = va_server.transformer
+        self.vae = va_server.vae
+        self.text_encoder = va_server.text_encoder
+        self.tokenizer = va_server.tokenizer
+
+    def generate(self, prompt: str, cam_images: dict) -> None:
+        self.va_server.infer({"reset": True, "prompt": prompt})
+        self.va_server.infer({"obs": [cam_images]})
