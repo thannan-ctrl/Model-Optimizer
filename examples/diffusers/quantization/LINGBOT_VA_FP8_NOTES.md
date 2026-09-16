@@ -5,7 +5,7 @@
 Adapted NVIDIA Model-Optimizer's FP8 PTQ quantization (`quantize.py`) — built for stock diffusers `WanPipeline`/Wan2.2 — to work with `lingbot-va-base`, a custom Wan2.2-derived video-action transformer that isn't a stock diffusers pipeline. Added a new `ModelType.LINGBOT_VA`, ran it end-to-end, and measured GPU memory/latency impact against a bf16 baseline. Synthetic calibration data was used for this pass (real RoboTwin calibration data deferred).
 
 ```sh
-python quantize.py \
+python Model-Optimizer/examples/diffusers/quantization/quantize.py \
     --model lingbot-va \
     --override-model-path /home/thannan/scratch/robotics/model/lingbot-va-base \
     --extra-param lingbot_va_repo=/home/thannan/scratch/robotics/lingbot-va \
@@ -13,7 +13,7 @@ python quantize.py \
     --format fp8 --batch-size 1 --calib-size 1 --collect-method default \
     --compress \
     --quantized-torch-ckpt-save-path ./lingbot_va_fp8_compressed.pt
-python check_memory.py
+python Model-Optimizer/examples/diffusers/quantization/check_memory.py
 ```
 
 Completed successfully (~52-66s for `--calib-size 1`).
