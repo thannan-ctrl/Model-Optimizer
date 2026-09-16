@@ -53,7 +53,7 @@ def make_dummy_obs(job_config):
     }
 
 
-def run_case(quantized: bool) -> None:
+def run_case(quantized: bool, compile: bool = False) -> None:
     torch.cuda.reset_peak_memory_stats()
     torch.cuda.empty_cache()
 
@@ -63,13 +63,42 @@ def run_case(quantized: bool) -> None:
         mto.restore(va_server.transformer, QUANTIZED_CKPT)
         va_server.transformer = va_server.transformer.to(va_server.device)
 
+    if compile:
+        # ModelOpt's RealQuantLinear registers weight/bias as *dynamic
+        # attributes* (DynamicModule.__getattr__ -> a freshly-constructed
+        # _FoldedCallback per access, modelopt/torch/opt/dynamic.py). Dynamo's
+        # symbolic tracer partially models that custom object (probing
+        # __len__/__iter__/__call__) instead of faithfully executing its
+        # __init__, so `self._callbacks` never gets set on the traced copy —
+        # crashes with InternalTorchDynamoError. Mark RealQuantLinear.forward
+        # Dynamo-opaque so it graph-breaks instead of being traced into; the
+        # ~942 quantized-Linear calls stay eager, but everything else
+        # (attention math, norms, elementwise ops) still compiles/fuses.
+        from modelopt.torch.quantization.nn.modules.quant_linear import RealQuantLinear
+
+        if not getattr(RealQuantLinear.forward, "_dynamo_disabled", False):
+            RealQuantLinear.forward = torch.compiler.disable(
+                RealQuantLinear.forward, recursive=True
+            )
+            RealQuantLinear.forward._dynamo_disabled = True
+
+        # fullgraph=False (default): also lets Dynamo insert graph breaks
+        # around lingbot-va's non-traceable KV-cache dict mutation /
+        # data-dependent slot allocation (update_cache/allocate_slots in
+        # WanAttention) while still compiling the rest.
+        va_server.transformer = torch.compile(va_server.transformer)
+
     mem_after_load = torch.cuda.max_memory_allocated() / 1e9
     print(f"Peak GPU memory after model load: {mem_after_load:.2f} GB")
 
     prompt = "a robot arm manipulating objects on a table"
     obs = make_dummy_obs(va_server.job_config)
 
-    num_iters = 3
+    # torch.compile pays its compilation cost on first call per unique
+    # input shape/signature it sees (action_mode=False vs True have
+    # different shapes) — more iterations here means "warm avg" reflects
+    # steady state after all shape variants have been compiled once.
+    num_iters = 5 if compile else 3
     latencies = []
     for i in range(num_iters):
         torch.cuda.synchronize()
@@ -89,19 +118,26 @@ def run_case(quantized: bool) -> None:
     print(f"Warm avg latency ({len(warm)} iters): {sum(warm) / len(warm):.3f} s")
 
 
+CASES = {
+    "baseline": dict(quantized=False, compile=False),
+    "quantized": dict(quantized=True, compile=False),
+    "quantized-compiled": dict(quantized=True, compile=True),
+}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--case", choices=["baseline", "quantized"], default=None)
+    parser.add_argument("--case", choices=list(CASES), default=None)
     args = parser.parse_args()
 
     if args.case is not None:
         # Worker mode: run exactly one case in this process.
-        run_case(quantized=(args.case == "quantized"))
+        run_case(**CASES[args.case])
         return
 
     # Driver mode: spawn each case as its own subprocess so peak-memory
     # stats from one case never leak into the other.
-    for case in ("baseline", "quantized"):
+    for case in CASES:
         print(f"\n=== {case} ===")
         subprocess.run(
             [sys.executable, __file__, "--case", case],
