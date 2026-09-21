@@ -398,6 +398,8 @@ class ExportManager:
 
         self.logger.info(f"Exporting HuggingFace checkpoint to {self.config.hf_ckpt_dir}")
         kwargs: dict[str, Any] = {}
+        if model_config and model_config.model_type == ModelType.LINGBOT_VA:
+            pipe = pipe.transformer
         if model_config and model_config.model_type == ModelType.LTX2:
             merged_path = model_config.extra_params.get("merged_base_safetensor_path")
             if merged_path:

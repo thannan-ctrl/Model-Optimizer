@@ -64,23 +64,30 @@ def run_case(quantized: bool, compile: bool = False) -> None:
         va_server.transformer = va_server.transformer.to(va_server.device)
 
     if compile:
-        # ModelOpt's RealQuantLinear registers weight/bias as *dynamic
-        # attributes* (DynamicModule.__getattr__ -> a freshly-constructed
-        # _FoldedCallback per access, modelopt/torch/opt/dynamic.py). Dynamo's
-        # symbolic tracer partially models that custom object (probing
-        # __len__/__iter__/__call__) instead of faithfully executing its
-        # __init__, so `self._callbacks` never gets set on the traced copy —
-        # crashes with InternalTorchDynamoError. Mark RealQuantLinear.forward
-        # Dynamo-opaque so it graph-breaks instead of being traced into; the
-        # ~942 quantized-Linear calls stay eager, but everything else
-        # (attention math, norms, elementwise ops) still compiles/fuses.
+        from modelopt.torch.opt.dynamic import DynamicModule
         from modelopt.torch.quantization.nn.modules.quant_linear import RealQuantLinear
 
+        # Two separate Dynamo/ModelOpt incompatibilities, need both patches:
+        # 1. RealQuantLinear.forward opaque — Dynamo otherwise traces into
+        #    Fp8PerTensorLinear.apply() (a custom autograd.Function used by
+        #    the real FP8 GEMM kernel) and crashes with
+        #    AsPythonConstantNotImplementedError tracing super().apply(...).
+        # 2. DynamicModule.__getattr__ opaque — raw .weight/.bias attribute
+        #    access on ANY DynamicModule (not just inside RealQuantLinear's
+        #    own forward — e.g. WanTimeTextImageEmbedding reading
+        #    self.time_embedder.linear_1.weight.dtype directly) otherwise
+        #    crashes with '_FoldedCallback' has no attribute '_callbacks'.
         if not getattr(RealQuantLinear.forward, "_dynamo_disabled", False):
             RealQuantLinear.forward = torch.compiler.disable(
                 RealQuantLinear.forward, recursive=True
             )
             RealQuantLinear.forward._dynamo_disabled = True
+
+        if not getattr(DynamicModule.__getattr__, "_dynamo_disabled", False):
+            DynamicModule.__getattr__ = torch.compiler.disable(
+                DynamicModule.__getattr__, recursive=True
+            )
+            DynamicModule.__getattr__._dynamo_disabled = True
 
         # fullgraph=False (default): also lets Dynamo insert graph breaks
         # around lingbot-va's non-traceable KV-cache dict mutation /

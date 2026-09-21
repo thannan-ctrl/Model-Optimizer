@@ -71,3 +71,13 @@ These instructions apply to AI-assisted work in this repository.
   changed and where. Those replies need no extra approval; pushback and postpone
   replies do, since no commit backs them. Never resolve threads: that is the
   reviewer's call.
+
+## Agent skills
+
+### Issue tracker
+
+Issues are tracked on the fork, `thannan-ctrl/Model-Optimizer` on GitHub. See `docs/agents/issue-tracker.md`.
+
+### Domain docs
+
+Single-context: one `CONTEXT.md` + `docs/adr/` at the repo root (created lazily). See `docs/agents/domain.md`.
