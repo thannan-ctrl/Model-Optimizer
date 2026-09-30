@@ -2,7 +2,7 @@
 
 Branch `lingbot-va-fp8-quantization`. Plan: `~/.claude/plans/rustling-drifting-moon.md`.
 
-## Current status (2026-09-30, 20:45 Munich): gate PASSED
+## Current status (2026-09-30, 21:15 Munich): gate PASSED on two eval sets
 
 **Candidate:** checkpoint C (`results/C/transformer.pt`, max calibration, 240
 FP8 Linear layers in blocks 3–26). It runs these calls in bf16, and
@@ -77,13 +77,45 @@ this is an estimate from two Thor measurements:
     77-call measurement.
   - End to end, the CPU text encoder (~9 s per episode) still dominates.
 
-**Next (Phase 4), started 2026-09-30 ~20:50, in parallel:**
-1. **Second eval seed:** `results/eval_manifest_seed2000.json`. 50 new
-   episodes (30 aug / 20 clean), disjoint from calibration and from the first
-   eval set. Every call checked, 5 GPUs (`results/drift/final2b_*`), results
-   about 21:30.
-2. **Commit** on `lingbot-va-fp8-quantization` (`-s`, no push).
-3. **Thor handoff note** (`LINGBOT_VA_FP8_THOR_HANDOFF.md`).
+**Phase 4 (2026-09-30), run in parallel:**
+1. **Second eval seed: PASSED.** `results/eval_manifest_seed2000.json`:
+   50 new episodes (30 aug / 20 clean), disjoint from calibration and from
+   the first eval set. Same setup, every call checked
+   (`results/drift/final2b_merged.json`).
+
+   | Eval set | Calls | Worst | Mean | Calls > 4% | Drift (normalized mean abs) |
+   |---|---|---|---|---|---|
+   | seed 1000 | 15,484 | 3.92% | 0.92% | 0 | 5.3e-4 |
+   | **seed 2000** | 15,484 | **3.88%** | 0.93% | **0** | **4.8e-4** |
+
+   - **Where the worst calls are:** again all video denoising step 23
+     (t = 303), at 3.7–3.9%. 11 calls are over 3.5%.
+   - **The pass isn't specific to one eval set.** The margin is small but
+     consistent.
+2. **Committed: done.** Five commits on `lingbot-va-fp8-quantization`, all
+   signed off (`-s`), not pushed:
+
+   | Commit | Contents |
+   |---|---|
+   | `486199167` | RoboTwin replay calibration: episode planner, `robotwin_replay.py`, calibration modes |
+   | `07a39b55b` | Calibration options: `--act-calib`, `--quant-algo mse`, `manifest_dir` |
+   | `e90fd4341` | `lingbot_va_parity.py`: gate, drift, bf16 call routing, sharding |
+   | `539c35f6b` | This file, plus `results/`: manifests, per-run commands, `LOG.md`, compact summaries in `results/summaries/` |
+   | `cb390e103` | `LINGBOT_VA_FP8_THOR_HANDOFF.md`, and the speed estimate here |
+
+   The full per-call parity JSONs (8–13 MB each, about 150 MB in total) and
+   the checkpoints stay on disk and are gitignored. Only compact summaries
+   are committed (1.1 MB for 59 files).
+3. **Thor handoff note: done.** `LINGBOT_VA_FP8_THOR_HANDOFF.md` covers:
+   - the checkpoint, and that Thor needs both a bf16 and an FP8 engine
+   - the call-routing rule, with a `RoutedTrunkForward` sketch for
+     faster-wam's `trunk_wrapper.py`
+   - pre-export checks: `mto.restore` weight equality, and the bf16 cast
+   - Thor validation: fixture parity, TensorRT parity, closed-loop success
+     rate, timing
+
+**Checkpoints kept on disk:** `results/{A,B,C}/transformer.pt`, 9.6 GB each.
+C is the candidate.
 
 ## Goal
 

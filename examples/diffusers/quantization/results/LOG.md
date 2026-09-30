@@ -62,3 +62,4 @@ checkpoint C.
 |---|---|---|---|---|---|
 | Cache writes + chunk-0 video | 7.5% (action step 49) | 1.06% | 123 | 0.00088 | FAIL |
 | Cache writes + chunk-0 video + last video step + last 2 action steps | **3.92%** (video step 23) | 0.92% | 0 | **0.00053** | **PASS** |
+| Same, second eval seed (2000), 50 new episodes | **3.88%** (video step 23) | 0.93% | 0 | **0.00048** | **PASS** |
