@@ -2,7 +2,7 @@
 
 Branch `lingbot-va-fp8-quantization`. Plan: `~/.claude/plans/rustling-drifting-moon.md`.
 
-## Current status (2026-09-30, 21:15 Munich): gate PASSED on two eval sets
+## Current status (2026-09-30, 21:30 Munich): DONE, gate passed on two eval sets
 
 **Candidate:** checkpoint C (`results/C/transformer.pt`, max calibration, 240
 FP8 Linear layers in blocks 3–26). It runs these calls in bf16, and
@@ -77,7 +77,7 @@ this is an estimate from two Thor measurements:
     77-call measurement.
   - End to end, the CPU text encoder (~9 s per episode) still dominates.
 
-**Phase 4 (2026-09-30), run in parallel:**
+**Phase 4 (2026-09-30): complete.**
 1. **Second eval seed: PASSED.** `results/eval_manifest_seed2000.json`:
    50 new episodes (30 aug / 20 clean), disjoint from calibration and from
    the first eval set. Same setup, every call checked
@@ -92,8 +92,9 @@ this is an estimate from two Thor measurements:
      (t = 303), at 3.7–3.9%. 11 calls are over 3.5%.
    - **The pass isn't specific to one eval set.** The margin is small but
      consistent.
-2. **Committed: done.** Five commits on `lingbot-va-fp8-quantization`, all
-   signed off (`-s`), not pushed:
+2. **Committed: done.** Six commits on `lingbot-va-fp8-quantization`, all
+   signed off (`-s`). **Not pushed:** the branch is 6 ahead of
+   `fork/lingbot-va-fp8-quantization`.
 
    | Commit | Contents |
    |---|---|
@@ -102,6 +103,7 @@ this is an estimate from two Thor measurements:
    | `e90fd4341` | `lingbot_va_parity.py`: gate, drift, bf16 call routing, sharding |
    | `539c35f6b` | This file, plus `results/`: manifests, per-run commands, `LOG.md`, compact summaries in `results/summaries/` |
    | `cb390e103` | `LINGBOT_VA_FP8_THOR_HANDOFF.md`, and the speed estimate here |
+   | `e576d23d6` | Second eval seed confirmation (3.88% worst, 0 calls > 4%) |
 
    The full per-call parity JSONs (8–13 MB each, about 150 MB in total) and
    the checkpoints stay on disk and are gitignored. Only compact summaries
@@ -116,6 +118,29 @@ this is an estimate from two Thor measurements:
 
 **Checkpoints kept on disk:** `results/{A,B,C}/transformer.pt`, 9.6 GB each.
 C is the candidate.
+
+**State of the environment:**
+- No GPU allocations held.
+- 119 GB free on the shared scratch.
+- VA_Server debug dumps now go to node-local `/tmp`.
+- Working scripts are in `/home/scratch.thannan_wwfo/robotics/claude_scratch/`
+  (`env.sh`, `calib.sh`, `parity.sh`, `drift.sh`, `final2*.sh`, ...), outside
+  git.
+
+**Remaining work (owner: you):**
+1. Re-sign and push the 6 commits to `fork`.
+2. On Thor, following `LINGBOT_VA_FP8_THOR_HANDOFF.md`:
+   - build the FP8 trunk engine from `results/C/transformer.pt`, next to the
+     existing bf16 engine
+   - add `RoutedTrunkForward`
+   - check fixture and TensorRT parity
+   - measure closed-loop RoboTwin success rate and timing against bf16
+3. Optional: margin is small (worst 3.9%, all at video step 23, t=303).
+   Routing that step to bf16 too should add margin, at about one more bf16
+   call per chunk.
+4. Optional cleanup: the older base-model checkpoints in this directory
+   (`lingbot_va_fp8*.pt`, `lingbot_va_fp8_hf/`, about 31 GB) predate the
+   recalibration.
 
 ## Goal
 
@@ -670,26 +695,5 @@ That's 80% of the Linear layers in the transformer blocks.
 
 ## Next steps
 
-1. **Finish round 2:**
-   - fast parity for P9999, WMSE, AMSE and WAMSE, with and without bf16 cache
-     writes
-   - make drift compare quaternions by rotation angle, and report position in mm
-2. **Pick a candidate.** Currently C (max) with bf16 KV cache retention:
-   5.6% worst and 1.0% mean on the full set, 4.8% on the fast subset. Switch
-   only if AMSE or WAMSE beats it. Then confirm it on the full eval set, with every
-   call checked and a second eval seed.
-3. **If the remaining video-denoising error (about 5.6%) still misses 4%:**
-   - Give the video denoising calls a separate look: their error is the
-     largest outside the cache writes.
-   - Try SmoothQuant, or per-channel weight scales. Both need a TensorRT check
-     on Thor.
-   - Reconsider the gate with you. The end-to-end drift is 0.1% of the action
-     range.
-4. **Phase 4:** commit (`-s`, no push) and write a handoff note for Thor.
-   That note covers:
-   - the checkpoint and modelopt 0.46.1
-   - `FP8_GUIDE.md` steps B1–B3
-   - the `export_onnx_fp8_test.py` weight-overwrite fix
-   - the bf16 cast (bug 3)
-   - the calibrator class in the checkpoint (bug 5)
-   - two engines, if bf16 cache writes are adopted
+Superseded: see "Remaining work" under Current status at the top. Phases 2–4
+are complete.
