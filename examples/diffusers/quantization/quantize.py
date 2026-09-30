@@ -24,6 +24,7 @@ from typing import Any
 import torch
 from calibration import Calibrator
 from config import (
+    fp8_input_calibrator_rule,
     FP8_DEFAULT_CONFIG,
     INT8_DEFAULT_CONFIG,
     NVFP4_DEFAULT_CONFIG,
@@ -150,6 +151,13 @@ class Quantizer:
             )
 
         quant_cfg_list = list(base_cfg["quant_cfg"])
+
+        if self.config.act_calib != "max":
+            self.logger.info(
+                f"Input quantizers: histogram calibrator, method={self.config.act_calib}"
+                + (f", percentile={self.config.act_percentile}" if self.config.act_calib == "percentile" else "")
+            )
+            quant_cfg_list.append(fp8_input_calibrator_rule(self.config.act_calib, self.config.act_percentile))
 
         if self.config.format == QuantFormat.FP4:
             for i, entry in enumerate(quant_cfg_list):
@@ -545,6 +553,15 @@ def create_argument_parser() -> argparse.ArgumentParser:
         choices=[c.value for c in CollectMethod],
         help="Calibration collection method, works for INT8, not including smoothquant",
     )
+    quant_group.add_argument(
+        "--act-calib",
+        default="max",
+        choices=["max", "percentile", "mse"],
+        help="FP8 input (activation) quantizer calibration: max, or histogram percentile / FP8-aware MSE",
+    )
+    quant_group.add_argument(
+        "--act-percentile", type=float, default=99.99, help="Percentile for --act-calib percentile"
+    )
     quant_group.add_argument("--alpha", type=float, default=1.0, help="SmoothQuant alpha parameter")
     quant_group.add_argument("--lowrank", type=int, default=32, help="SVDQuant lowrank parameter")
     quant_group.add_argument(
@@ -648,6 +665,8 @@ def main() -> None:
             lowrank=args.lowrank,
             quantize_mha=args.quantize_mha,
             compress=args.compress,
+            act_calib=args.act_calib,
+            act_percentile=args.act_percentile,
             block_size=args.block_size,
         )
 
@@ -664,6 +683,9 @@ def main() -> None:
             batch_size=args.batch_size,
             calib_size=args.calib_size,
             n_steps=args.n_steps,
+            manifest_dir=Path(args.quantized_torch_ckpt_save_path)
+            if args.quantized_torch_ckpt_save_path
+            else None,
         )
 
         export_config = ExportConfig(

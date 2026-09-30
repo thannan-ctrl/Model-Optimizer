@@ -55,6 +55,7 @@ class QuantAlgo(str, Enum):
     MAX = "max"
     SVDQUANT = "svdquant"
     SMOOTHQUANT = "smoothquant"
+    MSE = "mse"  # max for activations, MSE search for weight amax
 
 
 class CollectMethod(str, Enum):
@@ -80,11 +81,15 @@ class QuantizationConfig:
     quantize_mha: bool = False
     compress: bool = False
     block_size: int = 16  # NVFP4 block size
+    act_calib: str = "max"  # input quantizers: max | percentile | mse (histogram-based)
+    act_percentile: float = 99.99
 
     def validate(self) -> None:
         """Validate configuration consistency."""
         if self.format == QuantFormat.FP8 and self.collect_method != CollectMethod.DEFAULT:
             raise NotImplementedError("Only 'default' collect method is implemented for FP8.")
+        if self.act_calib != "max" and self.format != QuantFormat.FP8:
+            raise NotImplementedError("--act-calib is only implemented for FP8.")
         if self.quantize_mha and self.format == QuantFormat.INT8:
             raise ValueError("MHA quantization is only supported for FP8, not INT8.")
         if self.compress and self.format == QuantFormat.INT8:
@@ -99,6 +104,8 @@ class CalibrationConfig:
     batch_size: int = 2
     calib_size: int = 128
     n_steps: int = 30
+    # Where calibration writes its sample manifest (lingbot-va); the checkpoint dir.
+    manifest_dir: Path | None = None
 
     def validate(self) -> None:
         """Validate calibration configuration."""

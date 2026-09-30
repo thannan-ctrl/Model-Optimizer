@@ -16,6 +16,8 @@
 import torch.nn as nn
 from calib.plugin_calib import PercentileCalibrator
 
+from modelopt.torch.quantization.calib import HistogramCalibrator
+
 from modelopt.torch.opt.config_loader import load_config
 from modelopt.torch.quantization.config import QuantizeConfig
 
@@ -51,6 +53,64 @@ def set_quant_config_attr(quant_config, trt_high_precision_dtype, quant_algo, **
         p = entry.get("cfg", {})
         if isinstance(p, dict) and "num_bits" in p and "trt_high_precision_dtype" not in p:
             p["trt_high_precision_dtype"] = trt_high_precision_dtype
+
+
+class FixedMethodHistogramCalibrator(HistogramCalibrator):
+    """Histogram calibrator with its amax method fixed at construction.
+
+    max/mse calibration calls ``compute_amax()`` without a method; this pins it,
+    so activation quantizers can use percentile or FP8-aware MSE while weight
+    quantizers keep their own calibrator.
+    """
+
+    def __init__(self, method="percentile", percentile=99.99, **kwargs):
+        super().__init__(**kwargs)
+        self._method = method
+        self._percentile = percentile
+
+    def compute_amax(self, *args, **kwargs):
+        if self._method == "mse":
+            # modelopt 0.46.1's histogram MSE crashes for FP8 (scaled_e4m3 signature), so search here.
+            return self._fp8_mse_amax()
+        return super().compute_amax(self._method, percentile=self._percentile)
+
+    def _fp8_mse_amax(self, start_bin=128):
+        """amax minimizing the histogram-weighted E4M3 round-trip error of |x|."""
+        import torch
+
+        if self._calib_hist is None:  # never saw data (e.g. an unused Linear), like modelopt's calibrators
+            return None
+
+        edges = torch.as_tensor(self._calib_bin_edges, dtype=torch.float64)
+        hist = torch.as_tensor(self._calib_hist, dtype=torch.float64).to(edges.device)
+        centers = ((edges[:-1] + edges[1:]) / 2).float()
+        candidates = edges[start_bin:].float()
+        best, best_amax = None, candidates[-1]
+        for chunk in candidates.split(256):
+            scale = (chunk / 448.0)[:, None]
+            q = (centers[None] / scale).clamp(-448, 448).to(torch.float8_e4m3fn).float() * scale
+            err = (((q - centers[None]) ** 2).double() * hist[None]).sum(1)
+            i = int(err.argmin())
+            if best is None or err[i] < best:
+                best, best_amax = err[i], chunk[i]
+        self._calib_amax = best_amax.clone().detach()
+        return self._calib_amax
+
+
+def fp8_input_calibrator_rule(method, percentile):
+    """quant_cfg entry giving every input quantizer a per-tensor histogram calibrator."""
+    return {
+        "quantizer_name": "*input_quantizer",
+        "cfg": {
+            "num_bits": (4, 3),
+            "axis": None,
+            "calibrator": (
+                FixedMethodHistogramCalibrator,
+                (),
+                {"num_bits": (4, 3), "axis": None, "method": method, "percentile": percentile},
+            ),
+        },
+    }
 
 
 def reset_set_int8_config(quant_config, percentile, n_steps, collect_method, backbone):
