@@ -381,7 +381,7 @@ def main():
     p.add_argument("--test", choices=["fp8", "bf16", "fp8-disabled"], default="fp8")
     p.add_argument("--fp8-ckpt", help="mto.save'd transformer checkpoint (transformer.pt)")
     p.add_argument("--eval-manifest", help="Read if it exists, else planned and written")
-    p.add_argument("--robotwin-data-dir")
+    p.add_argument("--robotwin-data-dir", help="Dataset root; overrides the eval manifest's path")
     p.add_argument("--exclude-manifest", action="append", default=[], help="Calibration manifests to keep disjoint from")
     p.add_argument("--num-episodes", type=int, default=50, help="Eval episodes (planned count, or cap on a manifest)")
     p.add_argument("--eval-seed", type=int, default=1000)
@@ -499,7 +499,7 @@ def main():
     drift, actions_dump = [], []
     t0 = time.time()
     for i, entry in enumerate(entries, start=args.episode_start):
-        episode = RobotwinEpisode(manifest["dataset_dir"], entry, cam_keys)
+        episode = RobotwinEpisode(args.robotwin_data_dir or manifest["dataset_dir"], entry, cam_keys)
         seed = episode_seed(entry, manifest["seed"])
         hook.episode = i
         def on_chunk(k):

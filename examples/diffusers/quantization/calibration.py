@@ -205,7 +205,9 @@ class Calibrator:
                     f"Manifest {replay_path} has {len(entries)} episodes, calibration needs {num_episodes}"
                 )
             self.logger.info(f"Replaying {num_episodes} calibration episodes from {replay_path}")
-            return manifest["dataset_dir"], entries[:num_episodes], manifest["seed"]
+            # robotwin_data_dir, if given, overrides the manifest's (absolute) dataset path.
+            data_dir = extra_params.get("robotwin_data_dir") or manifest["dataset_dir"]
+            return data_dir, entries[:num_episodes], manifest["seed"]
 
         data_dir = extra_params.get("robotwin_data_dir")
         if not data_dir:
