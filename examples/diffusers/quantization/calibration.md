@@ -9,6 +9,29 @@ bf16 model at every step.
 average call by 0.9%. The robot's actions differ from bf16 by 0.05% of their
 range on average.
 
+## Results
+
+Every model call checked (15,484 per set):
+
+| Setup | Worst call | Average | Calls > 4% | Action drift (normalized) |
+|---|---|---|---|---|
+| **Final, eval set 1 (seed 1000)** | **3.92%** | 0.92% | 0 | 0.00053 |
+| **Final, eval set 2 (seed 2000)** | **3.88%** | 0.93% | 0 | 0.00048 |
+| FP8 everywhere | ≥ 13.6% | 3.9% | hundreds | 0.0014 |
+| *bf16 TensorRT on Thor, for reference* | – | – | – | *0.00044* |
+
+- **Action drift** is the mean absolute difference in the model's normalized
+  [-1, 1] action space. It doesn't grow over an episode.
+- **Margin is small.** Every worst call is video step 23, the step just
+  before the bf16 ones.
+
+**Estimated on Thor** (not measured; from bf16 TensorRT per-call times plus
+the 1.27× FP8 speedup in `FP8_GUIDE.md`):
+- **Speed:** about 1.25× faster than bf16 per chunk after the first, and
+  about 1.21× per episode. Plain FP8 would be about 1.27×.
+- **Memory:** both a bf16 and an FP8 engine are needed, about 13 GiB of
+  weights vs 8.1 GiB for bf16 alone.
+
 ## How it works, in plain terms
 
 - **Calibration.** FP8 needs one scale per layer so its limited range covers
@@ -48,29 +71,6 @@ range on average.
 | **Calibration data** | 50 RoboTwin episodes (one per task, both aug and clean scenes), 4 chunks each, including memory writes |
 | **bf16 calls** | memory writes (`update_cache` 1 or 2), all video calls of chunk 0, video steps with t ≤ 172.4, action steps with t ≤ 40 |
 | **Checkpoint** | `results/C/transformer.pt` (9.6 GB, not in git) |
-
-## Results
-
-Every model call checked (15,484 per set):
-
-| Setup | Worst call | Average | Calls > 4% | Action drift (normalized) |
-|---|---|---|---|---|
-| **Final, eval set 1 (seed 1000)** | **3.92%** | 0.92% | 0 | 0.00053 |
-| **Final, eval set 2 (seed 2000)** | **3.88%** | 0.93% | 0 | 0.00048 |
-| FP8 everywhere | ≥ 13.6% | 3.9% | hundreds | 0.0014 |
-| *bf16 TensorRT on Thor, for reference* | – | – | – | *0.00044* |
-
-- **Action drift** is the mean absolute difference in the model's normalized
-  [-1, 1] action space. It doesn't grow over an episode.
-- **Margin is small.** Every worst call is video step 23, the step just
-  before the bf16 ones.
-
-**Estimated on Thor** (not measured; from bf16 TensorRT per-call times plus
-the 1.27× FP8 speedup in `FP8_GUIDE.md`):
-- **Speed:** about 1.25× faster than bf16 per chunk after the first, and
-  about 1.21× per episode. Plain FP8 would be about 1.27×.
-- **Memory:** both a bf16 and an FP8 engine are needed, about 13 GiB of
-  weights vs 8.1 GiB for bf16 alone.
 
 ## What we learned
 
