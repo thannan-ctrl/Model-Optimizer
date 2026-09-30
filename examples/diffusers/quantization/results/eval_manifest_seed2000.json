@@ -1,0 +1,363 @@
+{
+  "version": 2,
+  "dataset_dir": "/home/scratch.thannan_wwfo/robotics/data/robotwin-clean-and-aug-lerobot",
+  "seed": 2000,
+  "chunks": 4,
+  "excluded_manifests": [
+    "results/C/calib_manifest.json",
+    "results/eval_manifest.json"
+  ],
+  "num_episodes": 50,
+  "episodes": [
+    {
+      "sample": 0,
+      "task_dir": "lerobot_robotwin_eef_aug_500/adjust_bottle-aloha-agilex_randomized_500-1000",
+      "episode_index": 256,
+      "length": 140,
+      "prompt": "Pick the medium green bottle with capped neck head-up using the right arm"
+    },
+    {
+      "sample": 1,
+      "task_dir": "lerobot_robotwin_eef_aug_500/beat_block_hammer-aloha-agilex_randomized_500-1000",
+      "episode_index": 12,
+      "length": 131,
+      "prompt": "Pick the handheld medium claw hammer and strike the block."
+    },
+    {
+      "sample": 2,
+      "task_dir": "lerobot_robotwin_eef_aug_500/blocks_ranking_rgb-aloha-agilex_randomized_500-1000",
+      "episode_index": 328,
+      "length": 474,
+      "prompt": "Line up the objects in the order red block, green block, and blue block, starting from the left."
+    },
+    {
+      "sample": 3,
+      "task_dir": "lerobot_robotwin_eef_aug_500/blocks_ranking_size",
+      "episode_index": 389,
+      "length": 277,
+      "prompt": "Pull open the drawer of the cabinet with angled sides and place the gray mouse with smooth surface inside."
+    },
+    {
+      "sample": 4,
+      "task_dir": "lerobot_robotwin_eef_clean_50/click_alarmclock-demo_clean_collect_200-50",
+      "episode_index": 9,
+      "length": 101,
+      "prompt": "Press the center button on the rounded square-shaped alarm clock's top."
+    },
+    {
+      "sample": 5,
+      "task_dir": "lerobot_robotwin_eef_clean_50/click_bell-demo_clean_collect_200-50",
+      "episode_index": 10,
+      "length": 83,
+      "prompt": "Push the compact bell with round base's <top center> on the table"
+    },
+    {
+      "sample": 6,
+      "task_dir": "lerobot_robotwin_eef_clean_50/dump_bin_bigbin-demo_clean_collect_200-50",
+      "episode_index": 47,
+      "length": 172,
+      "prompt": "Use the arm to lift the smooth plastic tabletrashbin and empty it."
+    },
+    {
+      "sample": 7,
+      "task_dir": "lerobot_robotwin_eef_clean_50/grab_roller-demo_clean_collect_200-50",
+      "episode_index": 7,
+      "length": 102,
+      "prompt": "Firmly grab the light brown wooden roller using arms."
+    },
+    {
+      "sample": 8,
+      "task_dir": "lerobot_robotwin_eef_aug_500/handover_block-aloha-agilex_randomized_500-1000",
+      "episode_index": 111,
+      "length": 277,
+      "prompt": "Grab the red block, hand it to the right arm, then set it down."
+    },
+    {
+      "sample": 9,
+      "task_dir": "lerobot_robotwin_eef_aug_500/handover_mic-aloha-agilex_randomized_500-1000",
+      "episode_index": 9,
+      "length": 225,
+      "prompt": "Lift the audio microphone with soft covering and pass it across."
+    },
+    {
+      "sample": 10,
+      "task_dir": "lerobot_robotwin_eef_aug_500/hanging_mug-aloha-agilex_randomized_500-1000",
+      "episode_index": 151,
+      "length": 336,
+      "prompt": "Pick the blue mug, turn it, put it in the center, and transfer it to the angled rack with long and short rods."
+    },
+    {
+      "sample": 11,
+      "task_dir": "lerobot_robotwin_eef_aug_500/lift_pot-aloha-agilex_randomized_500-1000",
+      "episode_index": 123,
+      "length": 116,
+      "prompt": "Grasp the medium-sized kitchenpot and elevate together."
+    },
+    {
+      "sample": 12,
+      "task_dir": "lerobot_robotwin_eef_aug_500/move_can_pot-aloha-agilex_randomized_500-1000",
+      "episode_index": 404,
+      "length": 150,
+      "prompt": "Pick up the sauce can with white details and put it beside the gray pot for boiling food"
+    },
+    {
+      "sample": 13,
+      "task_dir": "lerobot_robotwin_eef_aug_500/move_pillbottle_pad-aloha-agilex_randomized_500-1000",
+      "episode_index": 391,
+      "length": 151,
+      "prompt": "Take the smooth plastic bottle with teal accents and place it onto the pad"
+    },
+    {
+      "sample": 14,
+      "task_dir": "lerobot_robotwin_eef_clean_50/move_playingcard_away-demo_clean_collect_200-50",
+      "episode_index": 48,
+      "length": 114,
+      "prompt": "Using the left arm, lift the rectangular playingcards case and move it outward."
+    },
+    {
+      "sample": 15,
+      "task_dir": "lerobot_robotwin_eef_clean_50/move_stapler_pad-demo_clean_collect_200-50",
+      "episode_index": 1,
+      "length": 147,
+      "prompt": "Use the left arm and place the black stapler for joining pages on Red mat."
+    },
+    {
+      "sample": 16,
+      "task_dir": "lerobot_robotwin_eef_aug_500/open_laptop-aloha-agilex_randomized_500-1000",
+      "episode_index": 204,
+      "length": 230,
+      "prompt": "Lift the sleek black laptop with blue monitor's lid using the left arm."
+    },
+    {
+      "sample": 17,
+      "task_dir": "lerobot_robotwin_eef_clean_50/open_microwave-demo_clean_collect_200-50",
+      "episode_index": 32,
+      "length": 490,
+      "prompt": "Engage the microwave for heating food's handle and open it."
+    },
+    {
+      "sample": 18,
+      "task_dir": "lerobot_robotwin_eef_aug_500/pick_diverse_bottles-aloha-agilex_randomized_500-1000",
+      "episode_index": 212,
+      "length": 121,
+      "prompt": "Assign one arm to each of the bottle with ridges near base and the bottle with flat sides and logo."
+    },
+    {
+      "sample": 19,
+      "task_dir": "lerobot_robotwin_eef_clean_50/pick_dual_bottles-demo_clean_collect_200-50",
+      "episode_index": 13,
+      "length": 113,
+      "prompt": "Use each arm to hold the brown bottle with red label and the medium green bottle with capped neck."
+    },
+    {
+      "sample": 20,
+      "task_dir": "lerobot_robotwin_eef_clean_50/place_a2b_left-demo_clean_collect_200-50",
+      "episode_index": 12,
+      "length": 155,
+      "prompt": "Place the mouse with curved top directly to the left of the red plastic stapler with smooth top."
+    },
+    {
+      "sample": 21,
+      "task_dir": "lerobot_robotwin_eef_clean_50/place_a2b_right-demo_clean_collect_200-50",
+      "episode_index": 10,
+      "length": 159,
+      "prompt": "Grab the pink toycar shaped like real car using the left arm and set it to the black phone's right."
+    },
+    {
+      "sample": 22,
+      "task_dir": "lerobot_robotwin_eef_aug_500/place_bread_basket-aloha-agilex_randomized_500-1000",
+      "episode_index": 476,
+      "length": 314,
+      "prompt": "Use both arms to move the smooth loaf with rounded edges, the golden crusted bread slice to the breadbasket with curved base."
+    },
+    {
+      "sample": 23,
+      "task_dir": "lerobot_robotwin_eef_aug_500/place_bread_skillet-aloha-agilex_randomized_500-1000",
+      "episode_index": 160,
+      "length": 160,
+      "prompt": "Place the rectangular bread soft inside into the black-surfaced skillet with gray sides with the right arm."
+    },
+    {
+      "sample": 24,
+      "task_dir": "lerobot_robotwin_eef_clean_50/place_burger_fries-demo_clean_collect_200-50",
+      "episode_index": 42,
+      "length": 241,
+      "prompt": "Grab the easy-to-hold hamburg, then the golden fries in red packaging, and set them on the rectangular green tray."
+    },
+    {
+      "sample": 25,
+      "task_dir": "lerobot_robotwin_eef_clean_50/place_can_basket-demo_clean_collect_200-50",
+      "episode_index": 39,
+      "length": 240,
+      "prompt": "Lift the can with red green label, set it in the rectangular basket with smooth surface, and elevate the rectangular basket with smooth surface."
+    },
+    {
+      "sample": 26,
+      "task_dir": "lerobot_robotwin_eef_aug_500/place_cans_plasticbox-aloha-agilex_randomized_500-1000",
+      "episode_index": 172,
+      "length": 282,
+      "prompt": "Lift the Coca-Cola can, put it in the plasticbox for carrying items, then handle the can with red green label similarly."
+    },
+    {
+      "sample": 27,
+      "task_dir": "lerobot_robotwin_eef_aug_500/place_container_plate-aloha-agilex_randomized_500-1000",
+      "episode_index": 386,
+      "length": 158,
+      "prompt": "Use the bowl with deep black hollow to place the container into the dish plate"
+    },
+    {
+      "sample": 28,
+      "task_dir": "lerobot_robotwin_eef_aug_500/place_dual_shoes-aloha-agilex_randomized_500-1000",
+      "episode_index": 62,
+      "length": 218,
+      "prompt": "Ensure two the shoe with colorful stripes are in the medium orange box with smooth surface, tips facing left."
+    },
+    {
+      "sample": 29,
+      "task_dir": "lerobot_robotwin_eef_clean_50/place_empty_cup-demo_clean_collect_200-50",
+      "episode_index": 44,
+      "length": 184,
+      "prompt": "Stick the rounded base blue cup onto the flat round wooden coaster using the arm"
+    },
+    {
+      "sample": 30,
+      "task_dir": "lerobot_robotwin_eef_aug_500/place_fan-aloha-agilex_randomized_500-1000",
+      "episode_index": 71,
+      "length": 150,
+      "prompt": "Grab the curved plastic body small fan with the right arm and ensure it's positioned on the Maroon mat facing the robot."
+    },
+    {
+      "sample": 31,
+      "task_dir": "lerobot_robotwin_eef_aug_500/place_mouse_pad-aloha-agilex_randomized_500-1000",
+      "episode_index": 290,
+      "length": 149,
+      "prompt": "Use the left arm to grab the mouse with sleek design and drop it on the Gray colored mat."
+    },
+    {
+      "sample": 32,
+      "task_dir": "lerobot_robotwin_eef_clean_50/place_object_basket-demo_clean_collect_200-50",
+      "episode_index": 40,
+      "length": 273,
+      "prompt": "Pick the rectangle-shaped cards box, drop the rectangle-shaped cards box in the rectangular yellow basket, slide the rectangular yellow basket lightly."
+    },
+    {
+      "sample": 33,
+      "task_dir": "lerobot_robotwin_eef_aug_500/place_object_scale-aloha-agilex_randomized_500-1000",
+      "episode_index": 448,
+      "length": 146,
+      "prompt": "Grab the office stapler with plastic and metal parts, then place it smoothly on the white electronicscale with red buttons"
+    },
+    {
+      "sample": 34,
+      "task_dir": "lerobot_robotwin_eef_clean_50/place_object_stand-demo_clean_collect_200-50",
+      "episode_index": 38,
+      "length": 139,
+      "prompt": "Use the left arm to move the stapler for stapling paper onto the smooth black displaystand."
+    },
+    {
+      "sample": 35,
+      "task_dir": "lerobot_robotwin_eef_clean_50/place_phone_stand-demo_clean_collect_200-50",
+      "episode_index": 17,
+      "length": 128,
+      "prompt": "Put the thin phone with smooth texture atop the flat base phonestand."
+    },
+    {
+      "sample": 36,
+      "task_dir": "lerobot_robotwin_eef_aug_500/place_shoe-aloha-agilex_randomized_500-1000",
+      "episode_index": 316,
+      "length": 175,
+      "prompt": "Grab the shoe with flat rubber sole from the table with the right arm and place it on the mat"
+    },
+    {
+      "sample": 37,
+      "task_dir": "lerobot_robotwin_eef_aug_500/press_stapler-aloha-agilex_randomized_500-1000",
+      "episode_index": 114,
+      "length": 120,
+      "prompt": "Push the stapler the blue stapler with shiny silver parts to operate it."
+    },
+    {
+      "sample": 38,
+      "task_dir": "lerobot_robotwin_eef_clean_50/put_bottles_dustbin-piper_clean_50-50",
+      "episode_index": 31,
+      "length": 524,
+      "prompt": "Place the bottle made of smooth plastic, the bottle with ribbed design, and the black and red bottle, one at a time, into the rectangular black trash holder."
+    },
+    {
+      "sample": 39,
+      "task_dir": "lerobot_robotwin_eef_aug_500/put_object_cabinet",
+      "episode_index": 406,
+      "length": 453,
+      "prompt": "Place large block, medium block, small block centrally and arrange largest to smallest."
+    },
+    {
+      "sample": 40,
+      "task_dir": "lerobot_robotwin_eef_aug_500/rotate_qrcode-aloha-agilex_randomized_500-1000",
+      "episode_index": 211,
+      "length": 151,
+      "prompt": "Employ the right arm to seize the white paymentsign with raised base, raise it, and rotate it QR-forward"
+    },
+    {
+      "sample": 41,
+      "task_dir": "lerobot_robotwin_eef_clean_50/scan_object-demo_clean_collect_200-50",
+      "episode_index": 41,
+      "length": 164,
+      "prompt": "First, grab the curved black scanner with trigger, then pick the tea-box with white TEA text, and scan the tea-box with white TEA text using the curved black scanner with trigger."
+    },
+    {
+      "sample": 42,
+      "task_dir": "lerobot_robotwin_eef_clean_50/shake_bottle-demo_clean_collect_200-50",
+      "episode_index": 42,
+      "length": 243,
+      "prompt": "Pick the bottle for liquids up with the right arm and shake."
+    },
+    {
+      "sample": 43,
+      "task_dir": "lerobot_robotwin_eef_aug_500/shake_bottle_horizontally-aloha-agilex_randomized_500-1000",
+      "episode_index": 91,
+      "length": 273,
+      "prompt": "Shake the bottle with blue cap horizontally after lifting with the right arm."
+    },
+    {
+      "sample": 44,
+      "task_dir": "lerobot_robotwin_eef_aug_500/stack_blocks_three-aloha-agilex_randomized_500-1000",
+      "episode_index": 426,
+      "length": 480,
+      "prompt": "Gather red block, green block, and blue block at the table's center and stack blue block on green block, then green block on red block."
+    },
+    {
+      "sample": 45,
+      "task_dir": "lerobot_robotwin_eef_aug_500/stack_blocks_two-aloha-agilex_randomized_500-1000",
+      "episode_index": 249,
+      "length": 317,
+      "prompt": "Move red block and green block to the center, then stack green block above red block."
+    },
+    {
+      "sample": 46,
+      "task_dir": "lerobot_robotwin_eef_aug_500/stack_bowls_three-aloha-agilex_randomized_500-1000",
+      "episode_index": 92,
+      "length": 468,
+      "prompt": "Align and stack the the rounded bowl with light blue color step by step using arms."
+    },
+    {
+      "sample": 47,
+      "task_dir": "lerobot_robotwin_eef_aug_500/stack_bowls_two-aloha-agilex_randomized_500-1000",
+      "episode_index": 87,
+      "length": 305,
+      "prompt": "Arrange the ceramic bowl with earthy brown trim, lift the glazed bowl with curved sides with the arm, and stack them."
+    },
+    {
+      "sample": 48,
+      "task_dir": "lerobot_robotwin_eef_aug_500/stamp_seal-aloha-agilex_randomized_500-1000",
+      "episode_index": 331,
+      "length": 137,
+      "prompt": "the left arm holds the seal showing carved detailed textures, presses Beige"
+    },
+    {
+      "sample": 49,
+      "task_dir": "lerobot_robotwin_eef_clean_50/turn_switch-demo_clean_collect_200-50",
+      "episode_index": 19,
+      "length": 106,
+      "prompt": "Operate the toggle switch light gray base with the left arm"
+    }
+  ]
+}

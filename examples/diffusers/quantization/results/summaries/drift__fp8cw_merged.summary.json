@@ -1,0 +1,913 @@
+{
+ "args": {
+  "resummarize": null,
+  "lingbot_va_repo": "/home/scratch.thannan_wwfo/robotics/lingbot-va",
+  "model_path": "/home/scratch.thannan_wwfo/robotics/model/lingbot-va-posttrain-robotwin",
+  "test": "fp8",
+  "fp8_ckpt": "results/C/transformer.pt",
+  "eval_manifest": "results/eval_manifest.json",
+  "robotwin_data_dir": null,
+  "exclude_manifest": [],
+  "num_episodes": 17,
+  "eval_seed": 1000,
+  "chunks": 4,
+  "video_stride": 5,
+  "action_stride": 10,
+  "threshold": 0.04,
+  "near_zero_frac": 0.1,
+  "disable_quantizers": [],
+  "episode_start": 0,
+  "bf16_cache_writes": true,
+  "free_running": true,
+  "out": "results/drift/fp8cw_0.json"
+ },
+ "quantizers": {
+  "weight": 240,
+  "input": 240,
+  "attention": []
+ },
+ "runtime_s": 1948.6737253665924,
+ "merged_from": [
+  "results/drift/fp8cw_0.json",
+  "results/drift/fp8cw_17.json",
+  "results/drift/fp8cw_34.json"
+ ],
+ "episodes": [
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/adjust_bottle-aloha-agilex_randomized_500-1000",
+   "episode_index": 431,
+   "length": 135
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/beat_block_hammer-demo_clean_collect_200-50",
+   "episode_index": 12,
+   "length": 117
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/blocks_ranking_rgb-demo_clean_collect_200-50",
+   "episode_index": 15,
+   "length": 452
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/blocks_ranking_size-demo_clean_collect_200-50",
+   "episode_index": 0,
+   "length": 435
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/click_alarmclock-demo_clean_collect_200-50",
+   "episode_index": 31,
+   "length": 104
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/click_bell-aloha-agilex_randomized_500-1000",
+   "episode_index": 442,
+   "length": 85
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/dump_bin_bigbin-aloha-agilex_randomized_500-1000",
+   "episode_index": 389,
+   "length": 347
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/grab_roller-demo_clean_collect_200-50",
+   "episode_index": 34,
+   "length": 103
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/handover_block-aloha-agilex_randomized_500-1000",
+   "episode_index": 258,
+   "length": 279
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/handover_mic-demo_clean_collect_200-50",
+   "episode_index": 12,
+   "length": 222
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/hanging_mug-demo_clean_collect_200-50",
+   "episode_index": 47,
+   "length": 333
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/lift_pot-aloha-agilex_randomized_500-1000",
+   "episode_index": 75,
+   "length": 114
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/move_can_pot-aloha-agilex_randomized_500-1000",
+   "episode_index": 34,
+   "length": 148
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/move_pillbottle_pad-demo_clean_collect_200-50",
+   "episode_index": 9,
+   "length": 139
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/move_playingcard_away-aloha-agilex_randomized_500-1000",
+   "episode_index": 460,
+   "length": 116
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/move_stapler_pad-aloha-agilex_randomized_500-1000",
+   "episode_index": 288,
+   "length": 168
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/open_laptop-aloha-agilex_randomized_500-1000",
+   "episode_index": 252,
+   "length": 183
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/open_microwave-demo_clean_collect_200-50",
+   "episode_index": 43,
+   "length": 423
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/pick_diverse_bottles-aloha-agilex_randomized_500-1000",
+   "episode_index": 28,
+   "length": 130
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/pick_dual_bottles-demo_clean_collect_200-50",
+   "episode_index": 46,
+   "length": 118
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/place_a2b_left-aloha-agilex_randomized_500-1000",
+   "episode_index": 278,
+   "length": 145
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/place_a2b_right-aloha-agilex_randomized_500-1000",
+   "episode_index": 416,
+   "length": 158
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/place_bread_basket-aloha-agilex_randomized_500-1000",
+   "episode_index": 240,
+   "length": 160
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_bread_skillet-demo_clean_collect_200-50",
+   "episode_index": 17,
+   "length": 168
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_burger_fries-demo_clean_collect_200-50",
+   "episode_index": 39,
+   "length": 240
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_can_basket-demo_clean_collect_200-50",
+   "episode_index": 40,
+   "length": 244
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_cans_plasticbox-demo_clean_collect_200-50",
+   "episode_index": 15,
+   "length": 284
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_container_plate-demo_clean_collect_200-50",
+   "episode_index": 24,
+   "length": 154
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_dual_shoes-demo_clean_collect_200-50",
+   "episode_index": 22,
+   "length": 245
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_empty_cup-demo_clean_collect_200-50",
+   "episode_index": 34,
+   "length": 170
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/place_fan-aloha-agilex_randomized_500-1000",
+   "episode_index": 135,
+   "length": 140
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_mouse_pad-demo_clean_collect_200-50",
+   "episode_index": 15,
+   "length": 161
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/place_object_basket-aloha-agilex_randomized_500-1000",
+   "episode_index": 48,
+   "length": 237
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_object_scale-demo_clean_collect_200-50",
+   "episode_index": 20,
+   "length": 156
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/place_object_stand-aloha-agilex_randomized_500-1000",
+   "episode_index": 316,
+   "length": 141
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_phone_stand-demo_clean_collect_200-50",
+   "episode_index": 8,
+   "length": 127
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/place_shoe-aloha-agilex_randomized_500-1000",
+   "episode_index": 167,
+   "length": 179
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/press_stapler-demo_clean_collect_200-50",
+   "episode_index": 46,
+   "length": 115
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/put_bottles_dustbin-aloha-agilex_randomized_500-1000",
+   "episode_index": 183,
+   "length": 650
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/put_object_cabinet",
+   "episode_index": 275,
+   "length": 469
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/rotate_qrcode-aloha-agilex_randomized_500-1000",
+   "episode_index": 386,
+   "length": 159
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/scan_object-demo_clean_collect_200-50",
+   "episode_index": 2,
+   "length": 171
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/shake_bottle-aloha-agilex_randomized_500-1000",
+   "episode_index": 153,
+   "length": 252
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/shake_bottle_horizontally-demo_clean_collect_200-50",
+   "episode_index": 15,
+   "length": 284
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/stack_blocks_three-aloha-agilex_randomized_500-1000",
+   "episode_index": 169,
+   "length": 480
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/stack_blocks_two-aloha-agilex_randomized_500-1000",
+   "episode_index": 67,
+   "length": 313
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/stack_bowls_three-aloha-agilex_randomized_500-1000",
+   "episode_index": 52,
+   "length": 439
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/stack_bowls_two-aloha-agilex_randomized_500-1000",
+   "episode_index": 47,
+   "length": 313
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/stamp_seal-aloha-agilex_randomized_500-1000",
+   "episode_index": 497,
+   "length": 142
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/turn_switch-demo_clean_collect_200-50",
+   "episode_index": 0,
+   "length": 112
+  }
+ ],
+ "summary": {
+  "num_calls": 2744,
+  "worst": 0.05572733411993792,
+  "mean": 0.010100392185307934,
+  "worst_raw_rel_mean": 0.05572733411993792,
+  "threshold": 0.04,
+  "near_zero_frac": 0.1,
+  "num_flagged_calls": 0,
+  "pass": false,
+  "table": [
+   {
+    "chunk": 0,
+    "mode": "action",
+    "kind": "commit",
+    "n": 50,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   },
+   {
+    "chunk": 0,
+    "mode": "action",
+    "kind": "denoise",
+    "n": 250,
+    "worst": 0.019586402186930245,
+    "mean": 0.014589799726895636,
+    "worst_raw_rel": 0.019586402186930245
+   },
+   {
+    "chunk": 0,
+    "mode": "action",
+    "kind": "kv_cache",
+    "n": 50,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   },
+   {
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "n": 50,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   },
+   {
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "n": 250,
+    "worst": 0.05572733411993792,
+    "mean": 0.031553189474939264,
+    "worst_raw_rel": 0.05572733411993792
+   },
+   {
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "n": 50,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   },
+   {
+    "chunk": 1,
+    "mode": "action",
+    "kind": "commit",
+    "n": 50,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   },
+   {
+    "chunk": 1,
+    "mode": "action",
+    "kind": "denoise",
+    "n": 250,
+    "worst": 0.011845356700705877,
+    "mean": 0.0053931808780349625,
+    "worst_raw_rel": 0.011845356700705877
+   },
+   {
+    "chunk": 1,
+    "mode": "action",
+    "kind": "kv_cache",
+    "n": 50,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   },
+   {
+    "chunk": 1,
+    "mode": "video",
+    "kind": "commit",
+    "n": 50,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   },
+   {
+    "chunk": 1,
+    "mode": "video",
+    "kind": "denoise",
+    "n": 250,
+    "worst": 0.03290476027140205,
+    "mean": 0.017798292376662094,
+    "worst_raw_rel": 0.03290476027140205
+   },
+   {
+    "chunk": 1,
+    "mode": "video",
+    "kind": "kv_cache",
+    "n": 50,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   },
+   {
+    "chunk": 2,
+    "mode": "action",
+    "kind": "commit",
+    "n": 50,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   },
+   {
+    "chunk": 2,
+    "mode": "action",
+    "kind": "denoise",
+    "n": 250,
+    "worst": 0.01219142428633234,
+    "mean": 0.005359090417320547,
+    "worst_raw_rel": 0.01219142428633234
+   },
+   {
+    "chunk": 2,
+    "mode": "action",
+    "kind": "kv_cache",
+    "n": 50,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   },
+   {
+    "chunk": 2,
+    "mode": "video",
+    "kind": "commit",
+    "n": 50,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   },
+   {
+    "chunk": 2,
+    "mode": "video",
+    "kind": "denoise",
+    "n": 250,
+    "worst": 0.027714913016598525,
+    "mean": 0.014792546998479221,
+    "worst_raw_rel": 0.027714913016598525
+   },
+   {
+    "chunk": 2,
+    "mode": "video",
+    "kind": "kv_cache",
+    "n": 50,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   },
+   {
+    "chunk": 3,
+    "mode": "action",
+    "kind": "commit",
+    "n": 46,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   },
+   {
+    "chunk": 3,
+    "mode": "action",
+    "kind": "denoise",
+    "n": 230,
+    "worst": 0.011917245566285165,
+    "mean": 0.005521297374646798,
+    "worst_raw_rel": 0.011917245566285165
+   },
+   {
+    "chunk": 3,
+    "mode": "action",
+    "kind": "kv_cache",
+    "n": 46,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   },
+   {
+    "chunk": 3,
+    "mode": "video",
+    "kind": "commit",
+    "n": 46,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   },
+   {
+    "chunk": 3,
+    "mode": "video",
+    "kind": "denoise",
+    "n": 230,
+    "worst": 0.031543626847231346,
+    "mean": 0.017713273009709773,
+    "worst_raw_rel": 0.031543626847231346
+   },
+   {
+    "chunk": 3,
+    "mode": "video",
+    "kind": "kv_cache",
+    "n": 46,
+    "worst": 0.0,
+    "mean": 0.0,
+    "worst_raw_rel": 0.0
+   }
+  ],
+  "top20": [
+   {
+    "episode": 12,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 20,
+    "t": 555.5555419921875,
+    "out": {
+     "rel_mean": 0.05572733411993792,
+     "mean_abs": 0.03754839301109314,
+     "max_abs": 0.78125,
+     "ref_scale": 0.6737877130508423
+    },
+    "rel_mean": 0.05572733411993792,
+    "judged": 0.05572733411993792,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 12,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 15,
+    "t": 769.230712890625,
+    "out": {
+     "rel_mean": 0.05063674164407585,
+     "mean_abs": 0.034183260053396225,
+     "max_abs": 0.7138671875,
+     "ref_scale": 0.6750683188438416
+    },
+    "rel_mean": 0.05063674164407585,
+    "judged": 0.05063674164407585,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 21,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 20,
+    "t": 555.5555419921875,
+    "out": {
+     "rel_mean": 0.05015132428855276,
+     "mean_abs": 0.04075263813138008,
+     "max_abs": 1.50390625,
+     "ref_scale": 0.8125934600830078
+    },
+    "rel_mean": 0.05015132428855276,
+    "judged": 0.05015132428855276,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 22,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 20,
+    "t": 555.5555419921875,
+    "out": {
+     "rel_mean": 0.04897067630000809,
+     "mean_abs": 0.03629346191883087,
+     "max_abs": 0.9432373046875,
+     "ref_scale": 0.7411264181137085
+    },
+    "rel_mean": 0.04897067630000809,
+    "judged": 0.04897067630000809,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 15,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 20,
+    "t": 555.5555419921875,
+    "out": {
+     "rel_mean": 0.048372504787469774,
+     "mean_abs": 0.03345918282866478,
+     "max_abs": 0.61376953125,
+     "ref_scale": 0.6916983723640442
+    },
+    "rel_mean": 0.048372504787469774,
+    "judged": 0.048372504787469774,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 8,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 20,
+    "t": 555.5555419921875,
+    "out": {
+     "rel_mean": 0.048312262354547414,
+     "mean_abs": 0.03580300882458687,
+     "max_abs": 0.703125,
+     "ref_scale": 0.7410749793052673
+    },
+    "rel_mean": 0.048312262354547414,
+    "judged": 0.048312262354547414,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 12,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 10,
+    "t": 882.3529052734375,
+    "out": {
+     "rel_mean": 0.04809881245273341,
+     "mean_abs": 0.03239687532186508,
+     "max_abs": 0.486663818359375,
+     "ref_scale": 0.6735483407974243
+    },
+    "rel_mean": 0.04809881245273341,
+    "judged": 0.04809881245273341,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 0,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 20,
+    "t": 555.5555419921875,
+    "out": {
+     "rel_mean": 0.047656984142443265,
+     "mean_abs": 0.03552451357245445,
+     "max_abs": 0.571533203125,
+     "ref_scale": 0.7454209327697754
+    },
+    "rel_mean": 0.047656984142443265,
+    "judged": 0.047656984142443265,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 12,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 0,
+    "t": 1000.0,
+    "out": {
+     "rel_mean": 0.04750816483584968,
+     "mean_abs": 0.032078877091407776,
+     "max_abs": 0.4609375,
+     "ref_scale": 0.6752287149429321
+    },
+    "rel_mean": 0.04750816483584968,
+    "judged": 0.04750816483584968,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 44,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 20,
+    "t": 555.5555419921875,
+    "out": {
+     "rel_mean": 0.04690666891695988,
+     "mean_abs": 0.0325353741645813,
+     "max_abs": 0.423797607421875,
+     "ref_scale": 0.6936193704605103
+    },
+    "rel_mean": 0.04690666891695988,
+    "judged": 0.04690666891695988,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 12,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 5,
+    "t": 952.3810424804688,
+    "out": {
+     "rel_mean": 0.04522516725530736,
+     "mean_abs": 0.03040807880461216,
+     "max_abs": 0.64306640625,
+     "ref_scale": 0.6723707318305969
+    },
+    "rel_mean": 0.04522516725530736,
+    "judged": 0.04522516725530736,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 21,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 15,
+    "t": 769.230712890625,
+    "out": {
+     "rel_mean": 0.04482082160509241,
+     "mean_abs": 0.036535926163196564,
+     "max_abs": 0.548095703125,
+     "ref_scale": 0.8151552081108093
+    },
+    "rel_mean": 0.04482082160509241,
+    "judged": 0.04482082160509241,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 5,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 20,
+    "t": 555.5555419921875,
+    "out": {
+     "rel_mean": 0.04470507133942726,
+     "mean_abs": 0.02962435595691204,
+     "max_abs": 0.2880859375,
+     "ref_scale": 0.6626620888710022
+    },
+    "rel_mean": 0.04470507133942726,
+    "judged": 0.04470507133942726,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 21,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 0,
+    "t": 1000.0,
+    "out": {
+     "rel_mean": 0.04466000926514273,
+     "mean_abs": 0.03616625443100929,
+     "max_abs": 0.59765625,
+     "ref_scale": 0.8098129630088806
+    },
+    "rel_mean": 0.04466000926514273,
+    "judged": 0.04466000926514273,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 0,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 15,
+    "t": 769.230712890625,
+    "out": {
+     "rel_mean": 0.04436073087004781,
+     "mean_abs": 0.03319300711154938,
+     "max_abs": 0.703125,
+     "ref_scale": 0.7482520341873169
+    },
+    "rel_mean": 0.04436073087004781,
+    "judged": 0.04436073087004781,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 11,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 20,
+    "t": 555.5555419921875,
+    "out": {
+     "rel_mean": 0.04428570599742464,
+     "mean_abs": 0.030994685366749763,
+     "max_abs": 0.55224609375,
+     "ref_scale": 0.6998801231384277
+    },
+    "rel_mean": 0.04428570599742464,
+    "judged": 0.04428570599742464,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 44,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 0,
+    "t": 1000.0,
+    "out": {
+     "rel_mean": 0.04425533244336505,
+     "mean_abs": 0.030437812209129333,
+     "max_abs": 0.484375,
+     "ref_scale": 0.6877772808074951
+    },
+    "rel_mean": 0.04425533244336505,
+    "judged": 0.04425533244336505,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 8,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 15,
+    "t": 769.230712890625,
+    "out": {
+     "rel_mean": 0.04418261605806005,
+     "mean_abs": 0.03277099132537842,
+     "max_abs": 0.44921875,
+     "ref_scale": 0.7417168617248535
+    },
+    "rel_mean": 0.04418261605806005,
+    "judged": 0.04418261605806005,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 15,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 0,
+    "t": 1000.0,
+    "out": {
+     "rel_mean": 0.044108145819990445,
+     "mean_abs": 0.03066808544099331,
+     "max_abs": 0.4287109375,
+     "ref_scale": 0.6952930092811584
+    },
+    "rel_mean": 0.044108145819990445,
+    "judged": 0.044108145819990445,
+    "flags": [],
+    "worst_tensor": "out"
+   },
+   {
+    "episode": 22,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 0,
+    "t": 1000.0,
+    "out": {
+     "rel_mean": 0.04400519647829391,
+     "mean_abs": 0.03271602466702461,
+     "max_abs": 1.14453125,
+     "ref_scale": 0.7434582114219666
+    },
+    "rel_mean": 0.04400519647829391,
+    "judged": 0.04400519647829391,
+    "flags": [],
+    "worst_tensor": "out"
+   }
+  ]
+ },
+ "free_running": {
+  "worst_rel_mean": 0.010170093852167607,
+  "worst_max_abs": 0.07031255960464478,
+  "worst_norm_max_abs": 0.140625,
+  "mean_norm_mean_abs": 0.0009246361210267535,
+  "by_chunk": {
+   "0": {
+    "n": 50,
+    "mean_rel_mean": 0.0010848436674588415,
+    "worst_rel_mean": 0.004024341722071836,
+    "mean_norm_mean_abs": 0.00047256485093384983,
+    "worst_norm_max_abs": 0.1171875
+   },
+   "1": {
+    "n": 50,
+    "mean_rel_mean": 0.0016739084332959917,
+    "worst_rel_mean": 0.010170093852167607,
+    "mean_norm_mean_abs": 0.0011872867634519935,
+    "worst_norm_max_abs": 0.06250011920928955
+   },
+   "2": {
+    "n": 50,
+    "mean_rel_mean": 0.0014899820741736682,
+    "worst_rel_mean": 0.005150903282559305,
+    "mean_norm_mean_abs": 0.0008918764162808657,
+    "worst_norm_max_abs": 0.140625
+   },
+   "3": {
+    "n": 46,
+    "mean_rel_mean": 0.0020425896920130667,
+    "worst_rel_mean": 0.007221009031148818,
+    "mean_norm_mean_abs": 0.0011661364823458312,
+    "worst_norm_max_abs": 0.078125
+   }
+  }
+ }
+}

@@ -1,0 +1,8 @@
+# Checkpoints are regenerable from calib_manifest.json + command.txt; keep them out of git.
+*.pt
+server_dumps/
+*.log
+# Per-call parity JSONs are 1-13 MB each; commit summaries/ instead (full files stay on disk).
+*/parity*.json
+drift/*.json
+loc/*.json

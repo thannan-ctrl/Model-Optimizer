@@ -1,0 +1,704 @@
+{
+ "args": {
+  "resummarize": null,
+  "lingbot_va_repo": "/home/scratch.thannan_wwfo/robotics/lingbot-va",
+  "model_path": "/home/scratch.thannan_wwfo/robotics/model/lingbot-va-posttrain-robotwin",
+  "test": "fp8",
+  "fp8_ckpt": "results/C/transformer.pt",
+  "eval_manifest": "results/eval_manifest.json",
+  "robotwin_data_dir": null,
+  "exclude_manifest": [],
+  "num_episodes": 10,
+  "eval_seed": 1000,
+  "chunks": 2,
+  "video_stride": 5,
+  "action_stride": 10,
+  "threshold": 0.04,
+  "near_zero_frac": 0.1,
+  "disable_quantizers": [
+   "blocks\\.2[34]\\.attn1\\.to_v\\."
+  ],
+  "free_running": false,
+  "out": "results/loc/v_2324.json"
+ },
+ "quantizers": {
+  "weight": 238,
+  "input": 238,
+  "attention": []
+ },
+ "runtime_s": 224.08035135269165,
+ "episodes": [
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/adjust_bottle-aloha-agilex_randomized_500-1000",
+   "episode_index": 431,
+   "length": 135
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/beat_block_hammer-demo_clean_collect_200-50",
+   "episode_index": 12,
+   "length": 117
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/blocks_ranking_rgb-demo_clean_collect_200-50",
+   "episode_index": 15,
+   "length": 452
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/blocks_ranking_size-demo_clean_collect_200-50",
+   "episode_index": 0,
+   "length": 435
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/click_alarmclock-demo_clean_collect_200-50",
+   "episode_index": 31,
+   "length": 104
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/click_bell-aloha-agilex_randomized_500-1000",
+   "episode_index": 442,
+   "length": 85
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/dump_bin_bigbin-aloha-agilex_randomized_500-1000",
+   "episode_index": 389,
+   "length": 347
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/grab_roller-demo_clean_collect_200-50",
+   "episode_index": 34,
+   "length": 103
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/handover_block-aloha-agilex_randomized_500-1000",
+   "episode_index": 258,
+   "length": 279
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/handover_mic-demo_clean_collect_200-50",
+   "episode_index": 12,
+   "length": 222
+  }
+ ],
+ "summary": {
+  "num_calls": 280,
+  "worst": 0.1242273747937202,
+  "mean": 0.039492164223000684,
+  "worst_raw_rel_mean": 0.1242273747937202,
+  "threshold": 0.04,
+  "near_zero_frac": 0.1,
+  "num_flagged_calls": 0,
+  "pass": false,
+  "table": [
+   {
+    "chunk": 0,
+    "mode": "action",
+    "kind": "commit",
+    "n": 10,
+    "worst": 0.09195040860177237,
+    "mean": 0.08112384625297682,
+    "worst_raw_rel": 0.09195040860177237
+   },
+   {
+    "chunk": 0,
+    "mode": "action",
+    "kind": "denoise",
+    "n": 50,
+    "worst": 0.01777443081191307,
+    "mean": 0.01460367156876606,
+    "worst_raw_rel": 0.01777443081191307
+   },
+   {
+    "chunk": 0,
+    "mode": "action",
+    "kind": "kv_cache",
+    "n": 10,
+    "worst": 0.08658532638973565,
+    "mean": 0.08086103383988254,
+    "worst_raw_rel": 0.08658532638973565
+   },
+   {
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "n": 10,
+    "worst": 0.12199926658218767,
+    "mean": 0.11246855271649014,
+    "worst_raw_rel": 0.12199926658218767
+   },
+   {
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "n": 50,
+    "worst": 0.047796097939585024,
+    "mean": 0.030307383166242007,
+    "worst_raw_rel": 0.047796097939585024
+   },
+   {
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "n": 10,
+    "worst": 0.12206298999344814,
+    "mean": 0.11288845342350762,
+    "worst_raw_rel": 0.12206298999344814
+   },
+   {
+    "chunk": 1,
+    "mode": "action",
+    "kind": "commit",
+    "n": 10,
+    "worst": 0.1242273747937202,
+    "mean": 0.08552915477429614,
+    "worst_raw_rel": 0.1242273747937202
+   },
+   {
+    "chunk": 1,
+    "mode": "action",
+    "kind": "denoise",
+    "n": 50,
+    "worst": 0.011853141934019627,
+    "mean": 0.005363031185077536,
+    "worst_raw_rel": 0.011853141934019627
+   },
+   {
+    "chunk": 1,
+    "mode": "action",
+    "kind": "kv_cache",
+    "n": 10,
+    "worst": 0.10907582050203986,
+    "mean": 0.08781945642100339,
+    "worst_raw_rel": 0.10907582050203986
+   },
+   {
+    "chunk": 1,
+    "mode": "video",
+    "kind": "commit",
+    "n": 10,
+    "worst": 0.1126244214456546,
+    "mean": 0.10053959537998443,
+    "worst_raw_rel": 0.1126244214456546
+   },
+   {
+    "chunk": 1,
+    "mode": "video",
+    "kind": "denoise",
+    "n": 50,
+    "worst": 0.02869409106428101,
+    "mean": 0.018484512353865085,
+    "worst_raw_rel": 0.02869409106428101
+   },
+   {
+    "chunk": 1,
+    "mode": "video",
+    "kind": "kv_cache",
+    "n": 10,
+    "worst": 0.11305164742763255,
+    "mean": 0.1007575140661244,
+    "worst_raw_rel": 0.11305164742763255
+   }
+  ],
+  "top20": [
+   {
+    "episode": 7,
+    "chunk": 1,
+    "mode": "action",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.1242273747937202,
+     "mean_abs": 0.016402026638388634,
+     "max_abs": 0.4443359375,
+     "ref_scale": 0.13203230500221252
+    },
+    "rel_mean": 0.1242273747937202,
+    "judged": 0.1242273747937202,
+    "flags": [],
+    "worst_tensor": "out",
+    "kv_worst": {
+     "block": 26,
+     "tensor": "v",
+     "rel_mean": 0.0838041037659394,
+     "mean_abs": 0.032697830349206924,
+     "ref_scale": 0.39016979932785034
+    }
+   },
+   {
+    "episode": 1,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.03686532355005939,
+     "mean_abs": 0.03415180742740631,
+     "max_abs": 0.9130859375,
+     "ref_scale": 0.9263938069343567
+    },
+    "rel_mean": 0.12206298999344814,
+    "judged": 0.12206298999344814,
+    "flags": [],
+    "worst_tensor": "v[24]",
+    "kv_worst": {
+     "block": 24,
+     "tensor": "v",
+     "rel_mean": 0.12206298999344814,
+     "mean_abs": 0.0807519406080246,
+     "ref_scale": 0.6615595817565918
+    }
+   },
+   {
+    "episode": 7,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.03230208881881343,
+     "mean_abs": 0.03085065260529518,
+     "max_abs": 0.68896484375,
+     "ref_scale": 0.9550668001174927
+    },
+    "rel_mean": 0.12199926658218767,
+    "judged": 0.12199926658218767,
+    "flags": [],
+    "worst_tensor": "v[23]",
+    "kv_worst": {
+     "block": 23,
+     "tensor": "v",
+     "rel_mean": 0.12199926658218767,
+     "mean_abs": 0.08522799611091614,
+     "ref_scale": 0.698594331741333
+    }
+   },
+   {
+    "episode": 7,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.03171892307135058,
+     "mean_abs": 0.030221348628401756,
+     "max_abs": 0.6796875,
+     "ref_scale": 0.9527860879898071
+    },
+    "rel_mean": 0.12160244464840739,
+    "judged": 0.12160244464840739,
+    "flags": [],
+    "worst_tensor": "v[23]",
+    "kv_worst": {
+     "block": 23,
+     "tensor": "v",
+     "rel_mean": 0.12160244464840739,
+     "mean_abs": 0.08493944257497787,
+     "ref_scale": 0.6985011100769043
+    }
+   },
+   {
+    "episode": 5,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.06692321488383057,
+     "mean_abs": 0.02985045500099659,
+     "max_abs": 0.48291015625,
+     "ref_scale": 0.4460403621196747
+    },
+    "rel_mean": 0.11989309120259208,
+    "judged": 0.11989309120259208,
+    "flags": [],
+    "worst_tensor": "v[27]",
+    "kv_worst": {
+     "block": 27,
+     "tensor": "v",
+     "rel_mean": 0.11989309120259208,
+     "mean_abs": 0.0740889459848404,
+     "ref_scale": 0.6179584264755249
+    }
+   },
+   {
+    "episode": 4,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.03007858985296918,
+     "mean_abs": 0.02607828751206398,
+     "max_abs": 0.359375,
+     "ref_scale": 0.8670049905776978
+    },
+    "rel_mean": 0.1183200611421998,
+    "judged": 0.1183200611421998,
+    "flags": [],
+    "worst_tensor": "v[23]",
+    "kv_worst": {
+     "block": 23,
+     "tensor": "v",
+     "rel_mean": 0.1183200611421998,
+     "mean_abs": 0.07533389329910278,
+     "ref_scale": 0.6366958618164062
+    }
+   },
+   {
+    "episode": 2,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.0322945435157133,
+     "mean_abs": 0.03035491704940796,
+     "max_abs": 0.982421875,
+     "ref_scale": 0.9399394989013672
+    },
+    "rel_mean": 0.11800211179850957,
+    "judged": 0.11800211179850957,
+    "flags": [],
+    "worst_tensor": "v[23]",
+    "kv_worst": {
+     "block": 23,
+     "tensor": "v",
+     "rel_mean": 0.11800211179850957,
+     "mean_abs": 0.08153213560581207,
+     "ref_scale": 0.6909379363059998
+    }
+   },
+   {
+    "episode": 1,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.03646641862330885,
+     "mean_abs": 0.03377876058220863,
+     "max_abs": 0.4140625,
+     "ref_scale": 0.9262977242469788
+    },
+    "rel_mean": 0.11789889615036411,
+    "judged": 0.11789889615036411,
+    "flags": [],
+    "worst_tensor": "v[24]",
+    "kv_worst": {
+     "block": 24,
+     "tensor": "v",
+     "rel_mean": 0.11789889615036411,
+     "mean_abs": 0.0780794695019722,
+     "ref_scale": 0.6622578501701355
+    }
+   },
+   {
+    "episode": 9,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.03373570966760058,
+     "mean_abs": 0.031888071447610855,
+     "max_abs": 0.40625,
+     "ref_scale": 0.9452319741249084
+    },
+    "rel_mean": 0.11782320912401592,
+    "judged": 0.11782320912401592,
+    "flags": [],
+    "worst_tensor": "v[24]",
+    "kv_worst": {
+     "block": 24,
+     "tensor": "v",
+     "rel_mean": 0.11782320912401592,
+     "mean_abs": 0.07523907721042633,
+     "ref_scale": 0.6385760307312012
+    }
+   },
+   {
+    "episode": 9,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.033146747139365856,
+     "mean_abs": 0.03137886896729469,
+     "max_abs": 0.3046875,
+     "ref_scale": 0.9466651082038879
+    },
+    "rel_mean": 0.11770726470902898,
+    "judged": 0.11770726470902898,
+    "flags": [],
+    "worst_tensor": "v[24]",
+    "kv_worst": {
+     "block": 24,
+     "tensor": "v",
+     "rel_mean": 0.11770726470902898,
+     "mean_abs": 0.07482454925775528,
+     "ref_scale": 0.6356833577156067
+    }
+   },
+   {
+    "episode": 4,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.03057890757390504,
+     "mean_abs": 0.026494307443499565,
+     "max_abs": 0.5234375,
+     "ref_scale": 0.8664242625236511
+    },
+    "rel_mean": 0.11770255568737231,
+    "judged": 0.11770255568737231,
+    "flags": [],
+    "worst_tensor": "v[23]",
+    "kv_worst": {
+     "block": 23,
+     "tensor": "v",
+     "rel_mean": 0.11770255568737231,
+     "mean_abs": 0.07561736553907394,
+     "ref_scale": 0.6424445509910583
+    }
+   },
+   {
+    "episode": 2,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.03130855918264052,
+     "mean_abs": 0.029289232566952705,
+     "max_abs": 0.4921875,
+     "ref_scale": 0.9355024099349976
+    },
+    "rel_mean": 0.11650197131508158,
+    "judged": 0.11650197131508158,
+    "flags": [],
+    "worst_tensor": "v[24]",
+    "kv_worst": {
+     "block": 24,
+     "tensor": "v",
+     "rel_mean": 0.11650197131508158,
+     "mean_abs": 0.07152364403009415,
+     "ref_scale": 0.6139264702796936
+    }
+   },
+   {
+    "episode": 5,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.06548586456409335,
+     "mean_abs": 0.028989626094698906,
+     "max_abs": 0.431640625,
+     "ref_scale": 0.44268524646759033
+    },
+    "rel_mean": 0.11516156550375622,
+    "judged": 0.11516156550375622,
+    "flags": [],
+    "worst_tensor": "v[27]",
+    "kv_worst": {
+     "block": 27,
+     "tensor": "v",
+     "rel_mean": 0.11516156550375622,
+     "mean_abs": 0.0703425407409668,
+     "ref_scale": 0.6108161211013794
+    }
+   },
+   {
+    "episode": 3,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.029280730249721297,
+     "mean_abs": 0.02681269682943821,
+     "max_abs": 0.61328125,
+     "ref_scale": 0.9157113432884216
+    },
+    "rel_mean": 0.11313230324210609,
+    "judged": 0.11313230324210609,
+    "flags": [],
+    "worst_tensor": "v[23]",
+    "kv_worst": {
+     "block": 23,
+     "tensor": "v",
+     "rel_mean": 0.11313230324210609,
+     "mean_abs": 0.07351107150316238,
+     "ref_scale": 0.6497796773910522
+    }
+   },
+   {
+    "episode": 7,
+    "chunk": 1,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.0231767452937652,
+     "mean_abs": 0.025758521631360054,
+     "max_abs": 0.2734375,
+     "ref_scale": 1.1113951206207275
+    },
+    "rel_mean": 0.11305164742763255,
+    "judged": 0.11305164742763255,
+    "flags": [],
+    "worst_tensor": "v[23]",
+    "kv_worst": {
+     "block": 23,
+     "tensor": "v",
+     "rel_mean": 0.11305164742763255,
+     "mean_abs": 0.07197155803442001,
+     "ref_scale": 0.6366254687309265
+    }
+   },
+   {
+    "episode": 3,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.029255241144462676,
+     "mean_abs": 0.026887783780694008,
+     "max_abs": 0.3671875,
+     "ref_scale": 0.9190757870674133
+    },
+    "rel_mean": 0.11295716630308644,
+    "judged": 0.11295716630308644,
+    "flags": [],
+    "worst_tensor": "v[23]",
+    "kv_worst": {
+     "block": 23,
+     "tensor": "v",
+     "rel_mean": 0.11295716630308644,
+     "mean_abs": 0.07352564483880997,
+     "ref_scale": 0.6509161591529846
+    }
+   },
+   {
+    "episode": 7,
+    "chunk": 1,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.023621426074784176,
+     "mean_abs": 0.02652108669281006,
+     "max_abs": 0.316162109375,
+     "ref_scale": 1.122755527496338
+    },
+    "rel_mean": 0.1126244214456546,
+    "judged": 0.1126244214456546,
+    "flags": [],
+    "worst_tensor": "v[23]",
+    "kv_worst": {
+     "block": 23,
+     "tensor": "v",
+     "rel_mean": 0.1126244214456546,
+     "mean_abs": 0.07022687047719955,
+     "ref_scale": 0.623549222946167
+    }
+   },
+   {
+    "episode": 1,
+    "chunk": 1,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.03780280615030755,
+     "mean_abs": 0.042586199939250946,
+     "max_abs": 1.31640625,
+     "ref_scale": 1.126535415649414
+    },
+    "rel_mean": 0.11154651836027861,
+    "judged": 0.11154651836027861,
+    "flags": [],
+    "worst_tensor": "v[24]",
+    "kv_worst": {
+     "block": 24,
+     "tensor": "v",
+     "rel_mean": 0.11154651836027861,
+     "mean_abs": 0.07399887591600418,
+     "ref_scale": 0.6633902788162231
+    }
+   },
+   {
+    "episode": 1,
+    "chunk": 1,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.03843613417437017,
+     "mean_abs": 0.04339417815208435,
+     "max_abs": 0.859375,
+     "ref_scale": 1.128994345664978
+    },
+    "rel_mean": 0.11096203806813643,
+    "judged": 0.11096203806813643,
+    "flags": [],
+    "worst_tensor": "v[24]",
+    "kv_worst": {
+     "block": 24,
+     "tensor": "v",
+     "rel_mean": 0.11096203806813643,
+     "mean_abs": 0.07416912168264389,
+     "ref_scale": 0.6684188842773438
+    }
+   },
+   {
+    "episode": 4,
+    "chunk": 1,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out": {
+     "rel_mean": 0.024648384937381945,
+     "mean_abs": 0.02665354497730732,
+     "max_abs": 0.421875,
+     "ref_scale": 1.081350564956665
+    },
+    "rel_mean": 0.11062620518248686,
+    "judged": 0.11062620518248686,
+    "flags": [],
+    "worst_tensor": "v[23]",
+    "kv_worst": {
+     "block": 23,
+     "tensor": "v",
+     "rel_mean": 0.11062620518248686,
+     "mean_abs": 0.0660446360707283,
+     "ref_scale": 0.597007155418396
+    }
+   }
+  ]
+ }
+}

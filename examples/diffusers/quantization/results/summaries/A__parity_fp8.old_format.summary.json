@@ -1,0 +1,740 @@
+{
+ "args": {
+  "lingbot_va_repo": "/home/scratch.thannan_wwfo/robotics/lingbot-va",
+  "model_path": "/home/scratch.thannan_wwfo/robotics/model/lingbot-va-posttrain-robotwin",
+  "test": "fp8",
+  "fp8_ckpt": "/home/scratch.thannan_wwfo/robotics/Model-Optimizer/examples/diffusers/quantization/results/A/transformer.pt",
+  "eval_manifest": "results/eval_manifest.json",
+  "robotwin_data_dir": "/home/scratch.thannan_wwfo/robotics/data/robotwin-clean-and-aug-lerobot",
+  "exclude_manifest": [],
+  "num_episodes": 50,
+  "eval_seed": 1000,
+  "chunks": 4,
+  "video_stride": 5,
+  "action_stride": 10,
+  "threshold": 0.04,
+  "free_running": false,
+  "out": "/home/scratch.thannan_wwfo/robotics/Model-Optimizer/examples/diffusers/quantization/results/A/parity_fp8.json"
+ },
+ "quantizers": {
+  "weight": 240,
+  "input": 240,
+  "attention": []
+ },
+ "runtime_s": 2661.6625015735626,
+ "episodes": [
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/adjust_bottle-aloha-agilex_randomized_500-1000",
+   "episode_index": 431,
+   "length": 135
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/beat_block_hammer-demo_clean_collect_200-50",
+   "episode_index": 12,
+   "length": 117
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/blocks_ranking_rgb-demo_clean_collect_200-50",
+   "episode_index": 15,
+   "length": 452
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/blocks_ranking_size-demo_clean_collect_200-50",
+   "episode_index": 0,
+   "length": 435
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/click_alarmclock-demo_clean_collect_200-50",
+   "episode_index": 31,
+   "length": 104
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/click_bell-aloha-agilex_randomized_500-1000",
+   "episode_index": 442,
+   "length": 85
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/dump_bin_bigbin-aloha-agilex_randomized_500-1000",
+   "episode_index": 389,
+   "length": 347
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/grab_roller-demo_clean_collect_200-50",
+   "episode_index": 34,
+   "length": 103
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/handover_block-aloha-agilex_randomized_500-1000",
+   "episode_index": 258,
+   "length": 279
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/handover_mic-demo_clean_collect_200-50",
+   "episode_index": 12,
+   "length": 222
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/hanging_mug-demo_clean_collect_200-50",
+   "episode_index": 47,
+   "length": 333
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/lift_pot-aloha-agilex_randomized_500-1000",
+   "episode_index": 75,
+   "length": 114
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/move_can_pot-aloha-agilex_randomized_500-1000",
+   "episode_index": 34,
+   "length": 148
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/move_pillbottle_pad-demo_clean_collect_200-50",
+   "episode_index": 9,
+   "length": 139
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/move_playingcard_away-aloha-agilex_randomized_500-1000",
+   "episode_index": 460,
+   "length": 116
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/move_stapler_pad-aloha-agilex_randomized_500-1000",
+   "episode_index": 288,
+   "length": 168
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/open_laptop-aloha-agilex_randomized_500-1000",
+   "episode_index": 252,
+   "length": 183
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/open_microwave-demo_clean_collect_200-50",
+   "episode_index": 43,
+   "length": 423
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/pick_diverse_bottles-aloha-agilex_randomized_500-1000",
+   "episode_index": 28,
+   "length": 130
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/pick_dual_bottles-demo_clean_collect_200-50",
+   "episode_index": 46,
+   "length": 118
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/place_a2b_left-aloha-agilex_randomized_500-1000",
+   "episode_index": 278,
+   "length": 145
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/place_a2b_right-aloha-agilex_randomized_500-1000",
+   "episode_index": 416,
+   "length": 158
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/place_bread_basket-aloha-agilex_randomized_500-1000",
+   "episode_index": 240,
+   "length": 160
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_bread_skillet-demo_clean_collect_200-50",
+   "episode_index": 17,
+   "length": 168
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_burger_fries-demo_clean_collect_200-50",
+   "episode_index": 39,
+   "length": 240
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_can_basket-demo_clean_collect_200-50",
+   "episode_index": 40,
+   "length": 244
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_cans_plasticbox-demo_clean_collect_200-50",
+   "episode_index": 15,
+   "length": 284
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_container_plate-demo_clean_collect_200-50",
+   "episode_index": 24,
+   "length": 154
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_dual_shoes-demo_clean_collect_200-50",
+   "episode_index": 22,
+   "length": 245
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_empty_cup-demo_clean_collect_200-50",
+   "episode_index": 34,
+   "length": 170
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/place_fan-aloha-agilex_randomized_500-1000",
+   "episode_index": 135,
+   "length": 140
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_mouse_pad-demo_clean_collect_200-50",
+   "episode_index": 15,
+   "length": 161
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/place_object_basket-aloha-agilex_randomized_500-1000",
+   "episode_index": 48,
+   "length": 237
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_object_scale-demo_clean_collect_200-50",
+   "episode_index": 20,
+   "length": 156
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/place_object_stand-aloha-agilex_randomized_500-1000",
+   "episode_index": 316,
+   "length": 141
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/place_phone_stand-demo_clean_collect_200-50",
+   "episode_index": 8,
+   "length": 127
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/place_shoe-aloha-agilex_randomized_500-1000",
+   "episode_index": 167,
+   "length": 179
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/press_stapler-demo_clean_collect_200-50",
+   "episode_index": 46,
+   "length": 115
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/put_bottles_dustbin-aloha-agilex_randomized_500-1000",
+   "episode_index": 183,
+   "length": 650
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/put_object_cabinet",
+   "episode_index": 275,
+   "length": 469
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/rotate_qrcode-aloha-agilex_randomized_500-1000",
+   "episode_index": 386,
+   "length": 159
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/scan_object-demo_clean_collect_200-50",
+   "episode_index": 2,
+   "length": 171
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/shake_bottle-aloha-agilex_randomized_500-1000",
+   "episode_index": 153,
+   "length": 252
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/shake_bottle_horizontally-demo_clean_collect_200-50",
+   "episode_index": 15,
+   "length": 284
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/stack_blocks_three-aloha-agilex_randomized_500-1000",
+   "episode_index": 169,
+   "length": 480
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/stack_blocks_two-aloha-agilex_randomized_500-1000",
+   "episode_index": 67,
+   "length": 313
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/stack_bowls_three-aloha-agilex_randomized_500-1000",
+   "episode_index": 52,
+   "length": 439
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/stack_bowls_two-aloha-agilex_randomized_500-1000",
+   "episode_index": 47,
+   "length": 313
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/stamp_seal-aloha-agilex_randomized_500-1000",
+   "episode_index": 497,
+   "length": 142
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_clean_50/turn_switch-demo_clean_collect_200-50",
+   "episode_index": 0,
+   "length": 112
+  }
+ ],
+ "summary": {
+  "num_calls": 2744,
+  "worst_rel_mean": 0.1606394648551941,
+  "mean_rel_mean": 0.03887071731948679,
+  "threshold": 0.04,
+  "pass": false,
+  "table": [
+   {
+    "chunk": 0,
+    "mode": "action",
+    "kind": "commit",
+    "n": 50,
+    "worst": 0.12207487225532532,
+    "mean": 0.08450377002358436
+   },
+   {
+    "chunk": 0,
+    "mode": "action",
+    "kind": "denoise",
+    "n": 250,
+    "worst": 0.019417868927121162,
+    "mean": 0.014099809683859349
+   },
+   {
+    "chunk": 0,
+    "mode": "action",
+    "kind": "kv_cache",
+    "n": 50,
+    "worst": 0.105811208486557,
+    "mean": 0.08318603545427322
+   },
+   {
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "n": 50,
+    "worst": 0.13796855509281158,
+    "mean": 0.11685917660593986
+   },
+   {
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "n": 250,
+    "worst": 0.054004501551389694,
+    "mean": 0.03162563242018223
+   },
+   {
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "n": 50,
+    "worst": 0.13565005362033844,
+    "mean": 0.11682103008031845
+   },
+   {
+    "chunk": 1,
+    "mode": "action",
+    "kind": "commit",
+    "n": 50,
+    "worst": 0.11256126314401627,
+    "mean": 0.08667917028069497
+   },
+   {
+    "chunk": 1,
+    "mode": "action",
+    "kind": "denoise",
+    "n": 250,
+    "worst": 0.01133397314697504,
+    "mean": 0.005330562401562929
+   },
+   {
+    "chunk": 1,
+    "mode": "action",
+    "kind": "kv_cache",
+    "n": 50,
+    "worst": 0.1117740124464035,
+    "mean": 0.0875320316851139
+   },
+   {
+    "chunk": 1,
+    "mode": "video",
+    "kind": "commit",
+    "n": 50,
+    "worst": 0.11873184144496918,
+    "mean": 0.10392763465642929
+   },
+   {
+    "chunk": 1,
+    "mode": "video",
+    "kind": "denoise",
+    "n": 250,
+    "worst": 0.03233708068728447,
+    "mean": 0.017771993163973092
+   },
+   {
+    "chunk": 1,
+    "mode": "video",
+    "kind": "kv_cache",
+    "n": 50,
+    "worst": 0.1215246394276619,
+    "mean": 0.10398165300488472
+   },
+   {
+    "chunk": 2,
+    "mode": "action",
+    "kind": "commit",
+    "n": 50,
+    "worst": 0.1539623886346817,
+    "mean": 0.10390799447894096
+   },
+   {
+    "chunk": 2,
+    "mode": "action",
+    "kind": "denoise",
+    "n": 250,
+    "worst": 0.013354598544538021,
+    "mean": 0.005273192473687231
+   },
+   {
+    "chunk": 2,
+    "mode": "action",
+    "kind": "kv_cache",
+    "n": 50,
+    "worst": 0.1606394648551941,
+    "mean": 0.10552778109908104
+   },
+   {
+    "chunk": 2,
+    "mode": "video",
+    "kind": "commit",
+    "n": 50,
+    "worst": 0.1289859414100647,
+    "mean": 0.10876972168684006
+   },
+   {
+    "chunk": 2,
+    "mode": "video",
+    "kind": "denoise",
+    "n": 250,
+    "worst": 0.028159601613879204,
+    "mean": 0.014810283854603767
+   },
+   {
+    "chunk": 2,
+    "mode": "video",
+    "kind": "kv_cache",
+    "n": 50,
+    "worst": 0.13480506837368011,
+    "mean": 0.1088139459490776
+   },
+   {
+    "chunk": 3,
+    "mode": "action",
+    "kind": "commit",
+    "n": 46,
+    "worst": 0.12397712469100952,
+    "mean": 0.09451498836278915
+   },
+   {
+    "chunk": 3,
+    "mode": "action",
+    "kind": "denoise",
+    "n": 230,
+    "worst": 0.011720346286892891,
+    "mean": 0.005411836095964131
+   },
+   {
+    "chunk": 3,
+    "mode": "action",
+    "kind": "kv_cache",
+    "n": 46,
+    "worst": 0.12396669387817383,
+    "mean": 0.09459085308987161
+   },
+   {
+    "chunk": 3,
+    "mode": "video",
+    "kind": "commit",
+    "n": 46,
+    "worst": 0.12907548248767853,
+    "mean": 0.10733098763486613
+   },
+   {
+    "chunk": 3,
+    "mode": "video",
+    "kind": "denoise",
+    "n": 230,
+    "worst": 0.03239746391773224,
+    "mean": 0.017812092703483676
+   },
+   {
+    "chunk": 3,
+    "mode": "video",
+    "kind": "kv_cache",
+    "n": 46,
+    "worst": 0.1251130849123001,
+    "mean": 0.10718010463144469
+   }
+  ],
+  "top20": [
+   {
+    "episode": 7,
+    "chunk": 2,
+    "mode": "action",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.1606394648551941,
+    "out_max_abs": 0.39453125,
+    "kv_rel_mean": 0.09756911545991898,
+    "kv_worst_block": 29,
+    "rel_mean": 0.1606394648551941
+   },
+   {
+    "episode": 7,
+    "chunk": 2,
+    "mode": "action",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.1539623886346817,
+    "out_max_abs": 0.55859375,
+    "kv_rel_mean": 0.09079861640930176,
+    "kv_worst_block": 29,
+    "rel_mean": 0.1539623886346817
+   },
+   {
+    "episode": 28,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.03514653071761131,
+    "out_max_abs": 0.720703125,
+    "kv_rel_mean": 0.13796855509281158,
+    "kv_worst_block": 24,
+    "rel_mean": 0.13796855509281158
+   },
+   {
+    "episode": 28,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.03400617092847824,
+    "out_max_abs": 0.3828125,
+    "kv_rel_mean": 0.13565005362033844,
+    "kv_worst_block": 24,
+    "rel_mean": 0.13565005362033844
+   },
+   {
+    "episode": 35,
+    "chunk": 2,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.025564417243003845,
+    "out_max_abs": 0.7900390625,
+    "kv_rel_mean": 0.13480506837368011,
+    "kv_worst_block": 23,
+    "rel_mean": 0.13480506837368011
+   },
+   {
+    "episode": 24,
+    "chunk": 2,
+    "mode": "action",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.1342390477657318,
+    "out_max_abs": 0.671875,
+    "kv_rel_mean": 0.10274508595466614,
+    "kv_worst_block": 29,
+    "rel_mean": 0.1342390477657318
+   },
+   {
+    "episode": 28,
+    "chunk": 2,
+    "mode": "action",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.1318293660879135,
+    "out_max_abs": 0.3564453125,
+    "kv_rel_mean": 0.1017114445567131,
+    "kv_worst_block": 29,
+    "rel_mean": 0.1318293660879135
+   },
+   {
+    "episode": 28,
+    "chunk": 2,
+    "mode": "action",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.1311621218919754,
+    "out_max_abs": 0.609375,
+    "kv_rel_mean": 0.1021990180015564,
+    "kv_worst_block": 29,
+    "rel_mean": 0.1311621218919754
+   },
+   {
+    "episode": 24,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.03323105722665787,
+    "out_max_abs": 0.705078125,
+    "kv_rel_mean": 0.1298895925283432,
+    "kv_worst_block": 23,
+    "rel_mean": 0.1298895925283432
+   },
+   {
+    "episode": 43,
+    "chunk": 3,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.024861590936779976,
+    "out_max_abs": 0.6875,
+    "kv_rel_mean": 0.12907548248767853,
+    "kv_worst_block": 23,
+    "rel_mean": 0.12907548248767853
+   },
+   {
+    "episode": 35,
+    "chunk": 2,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.025443602353334427,
+    "out_max_abs": 0.61181640625,
+    "kv_rel_mean": 0.1289859414100647,
+    "kv_worst_block": 23,
+    "rel_mean": 0.1289859414100647
+   },
+   {
+    "episode": 7,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.032649360597133636,
+    "out_max_abs": 0.66552734375,
+    "kv_rel_mean": 0.12881344556808472,
+    "kv_worst_block": 23,
+    "rel_mean": 0.12881344556808472
+   },
+   {
+    "episode": 27,
+    "chunk": 2,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.025262679904699326,
+    "out_max_abs": 1.119140625,
+    "kv_rel_mean": 0.12813495099544525,
+    "kv_worst_block": 23,
+    "rel_mean": 0.12813495099544525
+   },
+   {
+    "episode": 25,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.032993096858263016,
+    "out_max_abs": 0.36328125,
+    "kv_rel_mean": 0.12766078114509583,
+    "kv_worst_block": 24,
+    "rel_mean": 0.12766078114509583
+   },
+   {
+    "episode": 25,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.03278089314699173,
+    "out_max_abs": 0.4794921875,
+    "kv_rel_mean": 0.12763458490371704,
+    "kv_worst_block": 24,
+    "rel_mean": 0.12763458490371704
+   },
+   {
+    "episode": 26,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.03169749304652214,
+    "out_max_abs": 0.75262451171875,
+    "kv_rel_mean": 0.12682528793811798,
+    "kv_worst_block": 23,
+    "rel_mean": 0.12682528793811798
+   },
+   {
+    "episode": 1,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.03690798953175545,
+    "out_max_abs": 0.849609375,
+    "kv_rel_mean": 0.1266426295042038,
+    "kv_worst_block": 24,
+    "rel_mean": 0.1266426295042038
+   },
+   {
+    "episode": 26,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.0311522725969553,
+    "out_max_abs": 0.359375,
+    "kv_rel_mean": 0.12644733488559723,
+    "kv_worst_block": 23,
+    "rel_mean": 0.12644733488559723
+   },
+   {
+    "episode": 17,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.03057475946843624,
+    "out_max_abs": 0.4609375,
+    "kv_rel_mean": 0.12640605866909027,
+    "kv_worst_block": 24,
+    "rel_mean": 0.12640605866909027
+   },
+   {
+    "episode": 7,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.03139176219701767,
+    "out_max_abs": 0.28125,
+    "kv_rel_mean": 0.12599915266036987,
+    "kv_worst_block": 23,
+    "rel_mean": 0.12599915266036987
+   }
+  ]
+ }
+}

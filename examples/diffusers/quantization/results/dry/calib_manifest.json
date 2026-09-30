@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "dataset_dir": "/home/scratch.thannan_wwfo/robotics/data/robotwin-clean-and-aug-lerobot",
+  "seed": 0,
+  "chunks": 2,
+  "num_episodes": 2,
+  "episodes": [
+    {
+      "sample": 0,
+      "task_dir": "lerobot_robotwin_eef_aug_500/adjust_bottle-aloha-agilex_randomized_500-1000",
+      "episode_index": 419,
+      "length": 213,
+      "prompt": "Pick the dark drink bottle with logo upright from the table"
+    },
+    {
+      "sample": 1,
+      "task_dir": "lerobot_robotwin_eef_aug_500/beat_block_hammer-aloha-agilex_randomized_500-1000",
+      "episode_index": 192,
+      "length": 114,
+      "prompt": "Hold the hammer for nails then hit the block"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "dataset_dir": "/home/scratch.thannan_wwfo/robotics/data/robotwin-clean-and-aug-lerobot",
+  "seed": 1000,
+  "chunks": 2,
+  "excluded_manifests": [
+    "results/dry/calib_manifest.json"
+  ],
+  "num_episodes": 2,
+  "episodes": [
+    {
+      "sample": 0,
+      "task_dir": "lerobot_robotwin_eef_aug_500/adjust_bottle-aloha-agilex_randomized_500-1000",
+      "episode_index": 431,
+      "length": 135,
+      "prompt": "Hold the brown bottle with red label head-up after lifting it."
+    },
+    {
+      "sample": 1,
+      "task_dir": "lerobot_robotwin_eef_aug_500/beat_block_hammer-aloha-agilex_randomized_500-1000",
+      "episode_index": 400,
+      "length": 112,
+      "prompt": "Grab the plastic handle metal hammer and use it to hit"
+    }
+  ]
+}

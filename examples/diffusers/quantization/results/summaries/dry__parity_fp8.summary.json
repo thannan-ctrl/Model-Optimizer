@@ -1,0 +1,398 @@
+{
+ "args": {
+  "lingbot_va_repo": "/home/scratch.thannan_wwfo/robotics/lingbot-va",
+  "model_path": "/home/scratch.thannan_wwfo/robotics/model/lingbot-va-posttrain-robotwin",
+  "test": "fp8",
+  "fp8_ckpt": "/home/scratch.thannan_wwfo/robotics/Model-Optimizer/examples/diffusers/quantization/results/dry/transformer.pt",
+  "eval_manifest": "results/dry/eval_manifest.json",
+  "robotwin_data_dir": "/home/scratch.thannan_wwfo/robotics/data/robotwin-clean-and-aug-lerobot",
+  "exclude_manifest": [
+   "results/dry/calib_manifest.json"
+  ],
+  "num_episodes": 2,
+  "eval_seed": 1000,
+  "chunks": 2,
+  "video_stride": 5,
+  "action_stride": 10,
+  "threshold": 0.04,
+  "free_running": false,
+  "out": "/home/scratch.thannan_wwfo/robotics/Model-Optimizer/examples/diffusers/quantization/results/dry/parity_fp8.json"
+ },
+ "quantizers": {
+  "weight": 240,
+  "input": 240,
+  "attention": []
+ },
+ "runtime_s": 57.576380491256714,
+ "episodes": [
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/adjust_bottle-aloha-agilex_randomized_500-1000",
+   "episode_index": 431,
+   "length": 135
+  },
+  {
+   "task_dir": "lerobot_robotwin_eef_aug_500/beat_block_hammer-aloha-agilex_randomized_500-1000",
+   "episode_index": 400,
+   "length": 112
+  }
+ ],
+ "summary": {
+  "num_calls": 56,
+  "worst_rel_mean": 0.11660289019346237,
+  "mean_rel_mean": 0.040543424032096355,
+  "threshold": 0.04,
+  "pass": false,
+  "table": [
+   {
+    "chunk": 0,
+    "mode": "action",
+    "kind": "commit",
+    "n": 2,
+    "worst": 0.07945787906646729,
+    "mean": 0.079233068972826
+   },
+   {
+    "chunk": 0,
+    "mode": "action",
+    "kind": "denoise",
+    "n": 10,
+    "worst": 0.017040446400642395,
+    "mean": 0.014089831802994012
+   },
+   {
+    "chunk": 0,
+    "mode": "action",
+    "kind": "kv_cache",
+    "n": 2,
+    "worst": 0.07932104170322418,
+    "mean": 0.07926367223262787
+   },
+   {
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "n": 2,
+    "worst": 0.11660289019346237,
+    "mean": 0.11128158867359161
+   },
+   {
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "n": 10,
+    "worst": 0.048631031066179276,
+    "mean": 0.04273994192481041
+   },
+   {
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "n": 2,
+    "worst": 0.1121041402220726,
+    "mean": 0.10951947048306465
+   },
+   {
+    "chunk": 1,
+    "mode": "action",
+    "kind": "commit",
+    "n": 2,
+    "worst": 0.08436821401119232,
+    "mean": 0.08054979518055916
+   },
+   {
+    "chunk": 1,
+    "mode": "action",
+    "kind": "denoise",
+    "n": 10,
+    "worst": 0.008440913632512093,
+    "mean": 0.005034796427935362
+   },
+   {
+    "chunk": 1,
+    "mode": "action",
+    "kind": "kv_cache",
+    "n": 2,
+    "worst": 0.0780486986041069,
+    "mean": 0.07738156244158745
+   },
+   {
+    "chunk": 1,
+    "mode": "video",
+    "kind": "commit",
+    "n": 2,
+    "worst": 0.09657161682844162,
+    "mean": 0.09552678093314171
+   },
+   {
+    "chunk": 1,
+    "mode": "video",
+    "kind": "denoise",
+    "n": 10,
+    "worst": 0.0249630156904459,
+    "mean": 0.01956363469362259
+   },
+   {
+    "chunk": 1,
+    "mode": "video",
+    "kind": "kv_cache",
+    "n": 2,
+    "worst": 0.09656389057636261,
+    "mean": 0.09531890973448753
+   }
+  ],
+  "top20": [
+   {
+    "episode": 1,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.06965368986129761,
+    "out_max_abs": 0.5078125,
+    "kv_rel_mean": 0.11660289019346237,
+    "kv_worst_block": 27,
+    "rel_mean": 0.11660289019346237
+   },
+   {
+    "episode": 1,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.06825048476457596,
+    "out_max_abs": 0.46484375,
+    "kv_rel_mean": 0.1121041402220726,
+    "kv_worst_block": 27,
+    "rel_mean": 0.1121041402220726
+   },
+   {
+    "episode": 0,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.060551729053258896,
+    "out_max_abs": 0.46875,
+    "kv_rel_mean": 0.1069348007440567,
+    "kv_worst_block": 23,
+    "rel_mean": 0.1069348007440567
+   },
+   {
+    "episode": 0,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.06049169972538948,
+    "out_max_abs": 0.40625,
+    "kv_rel_mean": 0.10596028715372086,
+    "kv_worst_block": 23,
+    "rel_mean": 0.10596028715372086
+   },
+   {
+    "episode": 1,
+    "chunk": 1,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.05176007002592087,
+    "out_max_abs": 0.671875,
+    "kv_rel_mean": 0.09657161682844162,
+    "kv_worst_block": 24,
+    "rel_mean": 0.09657161682844162
+   },
+   {
+    "episode": 1,
+    "chunk": 1,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.05130516737699509,
+    "out_max_abs": 0.875,
+    "kv_rel_mean": 0.09656389057636261,
+    "kv_worst_block": 24,
+    "rel_mean": 0.09656389057636261
+   },
+   {
+    "episode": 0,
+    "chunk": 1,
+    "mode": "video",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.04557492956519127,
+    "out_max_abs": 0.833984375,
+    "kv_rel_mean": 0.0944819450378418,
+    "kv_worst_block": 23,
+    "rel_mean": 0.0944819450378418
+   },
+   {
+    "episode": 0,
+    "chunk": 1,
+    "mode": "video",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.043333038687705994,
+    "out_max_abs": 0.595703125,
+    "kv_rel_mean": 0.09407392889261246,
+    "kv_worst_block": 23,
+    "rel_mean": 0.09407392889261246
+   },
+   {
+    "episode": 0,
+    "chunk": 1,
+    "mode": "action",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.08436821401119232,
+    "out_max_abs": 0.2421875,
+    "kv_rel_mean": 0.07799407839775085,
+    "kv_worst_block": 26,
+    "rel_mean": 0.08436821401119232
+   },
+   {
+    "episode": 0,
+    "chunk": 0,
+    "mode": "action",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.07655028998851776,
+    "out_max_abs": 0.138671875,
+    "kv_rel_mean": 0.07945787906646729,
+    "kv_worst_block": 27,
+    "rel_mean": 0.07945787906646729
+   },
+   {
+    "episode": 1,
+    "chunk": 0,
+    "mode": "action",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.07883154600858688,
+    "out_max_abs": 0.123046875,
+    "kv_rel_mean": 0.07932104170322418,
+    "kv_worst_block": 29,
+    "rel_mean": 0.07932104170322418
+   },
+   {
+    "episode": 0,
+    "chunk": 0,
+    "mode": "action",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.07723134011030197,
+    "out_max_abs": 0.162109375,
+    "kv_rel_mean": 0.07920630276203156,
+    "kv_worst_block": 29,
+    "rel_mean": 0.07920630276203156
+   },
+   {
+    "episode": 1,
+    "chunk": 0,
+    "mode": "action",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.07216033339500427,
+    "out_max_abs": 0.11328125,
+    "kv_rel_mean": 0.07900825887918472,
+    "kv_worst_block": 23,
+    "rel_mean": 0.07900825887918472
+   },
+   {
+    "episode": 1,
+    "chunk": 1,
+    "mode": "action",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.0780486986041069,
+    "out_max_abs": 0.337890625,
+    "kv_rel_mean": 0.07462678104639053,
+    "kv_worst_block": 27,
+    "rel_mean": 0.0780486986041069
+   },
+   {
+    "episode": 1,
+    "chunk": 1,
+    "mode": "action",
+    "kind": "commit",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.07218167185783386,
+    "out_max_abs": 0.140625,
+    "kv_rel_mean": 0.076731376349926,
+    "kv_worst_block": 27,
+    "rel_mean": 0.076731376349926
+   },
+   {
+    "episode": 0,
+    "chunk": 1,
+    "mode": "action",
+    "kind": "kv_cache",
+    "step": 0,
+    "t": 0.0,
+    "out_rel_mean": 0.0719461590051651,
+    "out_max_abs": 0.125,
+    "kv_rel_mean": 0.076714426279068,
+    "kv_worst_block": 26,
+    "rel_mean": 0.076714426279068
+   },
+   {
+    "episode": 0,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 20,
+    "t": 555.5555419921875,
+    "out_rel_mean": 0.048631031066179276,
+    "out_max_abs": 0.7613525390625,
+    "rel_mean": 0.048631031066179276
+   },
+   {
+    "episode": 1,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 20,
+    "t": 555.5555419921875,
+    "out_rel_mean": 0.04723460599780083,
+    "out_max_abs": 0.64306640625,
+    "rel_mean": 0.04723460599780083
+   },
+   {
+    "episode": 0,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 15,
+    "t": 769.230712890625,
+    "out_rel_mean": 0.044128939509391785,
+    "out_max_abs": 0.7578125,
+    "rel_mean": 0.044128939509391785
+   },
+   {
+    "episode": 0,
+    "chunk": 0,
+    "mode": "video",
+    "kind": "denoise",
+    "step": 10,
+    "t": 882.3529052734375,
+    "out_rel_mean": 0.04328489303588867,
+    "out_max_abs": 0.6015625,
+    "rel_mean": 0.04328489303588867
+   }
+  ]
+ }
+}
