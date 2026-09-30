@@ -25,13 +25,20 @@ from quantize_config import CalibrationConfig
 from tqdm import tqdm
 from utils import load_calib_prompts
 
+# lingbot-va calibration modes (--extra-param robotwin_calib_mode=...):
+#   dummy        the original recipe: one fixed prompt, all-black cameras, first chunk.
+#   first_chunk  RoboTwin episodes, first chunk only (frame 0, no compute_kv_cache).
+#   replay       RoboTwin episodes, robotwin_chunks chunks each, including the
+#                compute_kv_cache calls (robotwin_replay.py). Default.
+_LINGBOT_VA_CALIB_MODES = ("dummy", "first_chunk", "replay")
 _LINGBOT_VA_DUMMY_PROMPT = "a robot arm manipulating objects on a table"
+
 
 def _make_lingbot_va_dummy_obs(job_config) -> dict:
     return {
-        cam_key: np.zeros((480, 640, 3), dtype=np.uint8)
-        for cam_key in job_config.obs_cam_keys
+        cam_key: np.zeros((480, 640, 3), dtype=np.uint8) for cam_key in job_config.obs_cam_keys
     }
+
 
 class Calibrator:
     """Handles model calibration for quantization."""
@@ -66,6 +73,9 @@ class Calibrator:
         Returns:
             List of batched calibration prompts
         """
+        if self.model_type == ModelType.LINGBOT_VA:
+            # Prompts come from the RoboTwin episodes, paired with their cameras.
+            return []
         self.logger.info(f"Loading calibration prompts from {self.config.prompts_dataset}")
         if isinstance(self.config.prompts_dataset, Path):
             return load_calib_prompts(
@@ -87,6 +97,10 @@ class Calibrator:
         Args:
             batched_prompts: List of batched calibration prompts
         """
+        if self.model_type == ModelType.LINGBOT_VA:
+            self._run_lingbot_va_calibration()
+            return
+
         self.logger.info(f"Starting calibration with {self.config.num_batches} batches")
         extra_args = MODEL_DEFAULTS.get(self.model_type, {}).get("inference_extra_args", {})
 
@@ -103,9 +117,6 @@ class Calibrator:
                 elif self.model_type in [ModelType.WAN22_T2V_14b, ModelType.WAN22_T2V_5b]:
                     # Special handling for WAN video models
                     self._run_wan_video_calibration(prompt_batch, extra_args)
-                elif self.model_type == ModelType.LINGBOT_VA:
-                    # lingbot-va: dummy synthetic obs, no real calibration data yet
-                    self._run_lingbot_va_calibration(prompt_batch, extra_args)
                 else:
                     common_args = {
                         "prompt": prompt_batch,
@@ -132,17 +143,90 @@ class Calibrator:
 
         self.pipe(prompt=prompt_batch, **kwargs).frames
 
-    def _run_lingbot_va_calibration(
-        self, prompt_batch: list[str], extra_args: dict[str, Any]
-    ) -> None:
+    def _run_lingbot_va_calibration(self) -> None:
+        """Calibrate on ``--calib-size`` lingbot-va runs (episodes, or dummy runs).
+
+        ``--batch-size`` doesn't apply: each run is one episode through VA_Server.
+        """
+        extra_params = self.pipeline_manager.config.extra_params
+        mode = extra_params.get("robotwin_calib_mode", "replay")
+        if mode not in _LINGBOT_VA_CALIB_MODES:
+            raise ValueError(f"robotwin_calib_mode={mode!r}, expected one of {_LINGBOT_VA_CALIB_MODES}")
+        va_server = self.pipe.va_server
+        num_runs = self.config.calib_size
+
+        if mode == "dummy":
+            self.logger.info(f"Calibrating lingbot-va on {num_runs} dummy runs")
+            obs = _make_lingbot_va_dummy_obs(va_server.job_config)
+            for _ in tqdm(range(num_runs), desc="Calibration", unit="run"):
+                self.pipe.generate(_LINGBOT_VA_DUMMY_PROMPT, obs)
+            return
+
+        from robotwin_episodes import RobotwinEpisode
+        from robotwin_replay import episode_seed, replay_episode
+
+        num_chunks = 1 if mode == "first_chunk" else int(extra_params.get("robotwin_chunks", 4))
+        data_dir, entries, seed = self._plan_robotwin_episodes(num_runs, num_chunks)
+        self.logger.info(
+            f"Calibrating lingbot-va on {len(entries)} RoboTwin episodes, mode={mode}, chunks={num_chunks}"
+        )
+        chunks_used = []
+        for entry in tqdm(entries, desc="Calibration", unit="episode"):
+            episode = RobotwinEpisode(data_dir, entry, va_server.job_config.obs_cam_keys)
+            result = replay_episode(
+                va_server,
+                episode,
+                num_chunks,
+                seed=episode_seed(entry, seed),
+                final_kv_cache=mode == "replay",
+            )
+            chunks_used.append(result["chunks"])
+            self.logger.info(
+                f"Episode {entry['sample']}: {entry['task_dir']} ep={entry['episode_index']} "
+                f"len={entry['length']} chunks={result['chunks']} task={entry['prompt']!r}"
+            )
+        self.logger.info(
+            f"Replayed {sum(chunks_used)} chunks; {sum(c < num_chunks for c in chunks_used)} "
+            f"episodes were too short for {num_chunks}"
+        )
+
+    def _plan_robotwin_episodes(self, num_episodes: int, num_chunks: int):
+        """Episode list for calibration: replayed from a manifest, or planned and saved."""
+        from robotwin_episodes import plan_episodes, read_manifest, write_manifest
+        from robotwin_replay import min_episode_length
+
+        extra_params = self.pipeline_manager.config.extra_params
+        replay_path = extra_params.get("robotwin_calib_manifest")
+        if replay_path:
+            manifest = read_manifest(replay_path)
+            entries = manifest["episodes"]
+            if len(entries) < num_episodes:
+                raise ValueError(
+                    f"Manifest {replay_path} has {len(entries)} episodes, calibration needs {num_episodes}"
+                )
+            self.logger.info(f"Replaying {num_episodes} calibration episodes from {replay_path}")
+            return manifest["dataset_dir"], entries[:num_episodes], manifest["seed"]
+
+        data_dir = extra_params.get("robotwin_data_dir")
+        if not data_dir:
+            raise ValueError(
+                "Missing required extra_param: robotwin_data_dir "
+                "(pass --extra-param robotwin_data_dir=/path/to/robotwin-clean-and-aug-lerobot)"
+            )
+        seed = int(extra_params.get("robotwin_seed", 0))
         job_config = self.pipe.va_server.job_config
-        # prompt_batch (real OpenVid-1M captions) is unused here: those
-        # captions are full-sentence length and VA_Server._reset() builds its
-        # save-directory name directly from the raw prompt string with no
-        # truncation, so long captions blow past OS filename length limits.
-        prompt = _LINGBOT_VA_DUMMY_PROMPT
-        cam_images = _make_lingbot_va_dummy_obs(job_config)
-        self.pipe.generate(prompt, cam_images)
+        min_length = min_episode_length(num_chunks, job_config.action_per_frame, job_config.frame_chunk_size)
+        entries = plan_episodes(data_dir, num_episodes, seed, min_length=min_length)
+
+        ckpt_dir = self.config.manifest_dir
+        if ckpt_dir is not None:
+            ckpt_dir.mkdir(parents=True, exist_ok=True)
+            manifest_path = ckpt_dir / "calib_manifest.json"
+            write_manifest(manifest_path, data_dir, seed, entries, chunks=num_chunks)
+            self.logger.info(f"Wrote calibration manifest to {manifest_path}")
+        else:
+            self.logger.warning("No checkpoint save path set; calibration manifest not written")
+        return data_dir, entries, seed
 
     def _run_ltx2_calibration(self, prompt_batch: list[str], extra_args: dict[str, Any]) -> None:
         warnings.warn(

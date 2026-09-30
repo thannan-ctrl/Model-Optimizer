@@ -280,49 +280,14 @@ class PipelineManager:
                 "Missing required extra_param: lingbot_va_repo "
                 "(pass --extra-param lingbot_va_repo=/path/to/lingbot-va)"
             )
-        if lingbot_va_repo not in sys.path:
-            sys.path.append(lingbot_va_repo)
+        from lingbot_va_utils import load_va_server
 
-        from wan_va.configs import VA_CONFIGS
-
-        # wan_va_server.py does `from utils import (...)` expecting its own
-        # wan_va/utils/ package. Python checks sys.modules (by name) before
-        # ever consulting sys.path, and even a fresh lookup would find this
-        # repo's own quantization/utils.py first via sys.path[0] (the running
-        # script's own directory), regardless of what we append afterward. So
-        # we manually build the wan_va/utils package module and inject it
-        # into sys.modules["utils"] before triggering the import, then
-        # restore our own utils.py afterward.
-        import importlib.util
-        import os as _os
-
-        wan_va_utils_dir = _os.path.join(lingbot_va_repo, "wan_va", "utils")
-        spec = importlib.util.spec_from_file_location(
-            "utils",
-            _os.path.join(wan_va_utils_dir, "__init__.py"),
-            submodule_search_locations=[wan_va_utils_dir],
+        va_server = load_va_server(
+            lingbot_va_repo,
+            self.config.model_path,
+            self.config.model_dtype.get("transformer", self.config.model_dtype["default"]),
+            save_root=params.pop("lingbot_va_save_root", None),
         )
-        wan_va_utils_module = importlib.util.module_from_spec(spec)
-
-        our_utils_module = sys.modules.get("utils")
-        sys.modules["utils"] = wan_va_utils_module
-        try:
-            spec.loader.exec_module(wan_va_utils_module)
-            from wan_va.wan_va_server import VA_Server
-        finally:
-            if our_utils_module is not None:
-                sys.modules["utils"] = our_utils_module
-            else:
-                sys.modules.pop("utils", None)
-
-        job_config = VA_CONFIGS["robotwin"]
-        job_config.wan22_pretrained_model_name_or_path = self.config.model_path
-        job_config.local_rank = 0
-        job_config.param_dtype = self.config.model_dtype.get(
-            "transformer", self.config.model_dtype["default"]
-        )
-
-        va_server = VA_Server(job_config)
 
         self._transformer = va_server.transformer
         return LingbotVAPipe(va_server)
