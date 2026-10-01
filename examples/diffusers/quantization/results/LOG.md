@@ -63,3 +63,20 @@ checkpoint C.
 | Cache writes + chunk-0 video | 7.5% (action step 49) | 1.06% | 123 | 0.00088 | FAIL |
 | Cache writes + chunk-0 video + last video step + last 2 action steps | **3.92%** (video step 23) | 0.92% | 0 | **0.00053** | **PASS** |
 | Same, second eval seed (2000), 50 new episodes | **3.88%** (video step 23) | 0.93% | 0 | **0.00048** | **PASS** |
+
+## Can one FP8 weight set serve both paths? No (2026-10-01)
+
+Same routing as the passing setup, but the routed calls keep the FP8 weights
+and switch off only the activation quantizers (`--routed-keep-fp8-weights`).
+Every call checked.
+
+| Routed calls use | Eval set | Worst | Mean | Calls > 4% | Drift (normalized mean abs) |
+|---|---|---|---|---|---|
+| Full bf16 (final) | seed 1000 | 3.92% | 0.92% | 0 | 0.00053 |
+| FP8 weights + bf16 activations | seed 1000 | 8.99% | 1.52% | 851 | 0.00082 |
+| Full bf16 (final) | seed 2000 | 3.88% | 0.93% | 0 | 0.00048 |
+| FP8 weights + bf16 activations | seed 2000 | 8.97% | 1.54% | 855 | 0.00083 |
+
+The failures return in the routed calls themselves: V written by blocks 23–24
+during cache writes (up to 9%), and chunk-0 video (up to 5.9%). The routed
+calls need the original bf16 weights, so Thor needs a bf16 and an FP8 engine.

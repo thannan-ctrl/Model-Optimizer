@@ -30,7 +30,9 @@ the 1.27× FP8 speedup in `FP8_GUIDE.md`):
 - **Speed:** about 1.25× faster than bf16 per chunk after the first, and
   about 1.21× per episode. Plain FP8 would be about 1.27×.
 - **Memory:** both a bf16 and an FP8 engine are needed, about 13 GiB of
-  weights vs 8.1 GiB for bf16 alone.
+  weights vs 8.1 GiB for bf16 alone. A single FP8 weight set doesn't work:
+  routing the same calls with FP8 weights and only bf16 activations fails,
+  at 9.0% worst with 851 calls over 4% (`results/LOG.md`).
 
 ## How it works, in plain terms
 

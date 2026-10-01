@@ -310,13 +310,20 @@ class Bf16CallPolicy:
     via ``on_chunk`` (replay_episode's hook).
     """
 
-    def __init__(self, model, cache_writes=False, first_chunk_video=False, video_t_max=None, action_t_max=None):
+    def __init__(self, model, cache_writes=False, first_chunk_video=False, video_t_max=None, action_t_max=None,
+                 keep_fp8_weights=False):
         from modelopt.torch.quantization.nn import TensorQuantizer
 
         self.cache_writes, self.first_chunk_video = cache_writes, first_chunk_video
         self.video_t_max, self.action_t_max = video_t_max, action_t_max
         self.chunk = 0
-        self.quantizers = [m for m in model.modules() if isinstance(m, TensorQuantizer) and m.is_enabled]
+        # keep_fp8_weights: routed calls switch off only the activation (input) quantizers, so they
+        # run bf16 activations on FP8-rounded weights. Tests whether one FP8 weight set can serve both paths.
+        self.quantizers = [
+            m for n, m in model.named_modules()
+            if isinstance(m, TensorQuantizer) and m.is_enabled
+            and (not keep_fp8_weights or n.endswith("input_quantizer"))
+        ]
         self.orig_forward = model.forward
         model.forward = self.forward
 
@@ -403,6 +410,8 @@ def main():
                    help="Also run the last N video denoising steps of every chunk with quantizers off")
     p.add_argument("--bf16-last-action-steps", type=int, default=0,
                    help="Also run the last N action denoising steps of every chunk with quantizers off")
+    p.add_argument("--routed-keep-fp8-weights", action="store_true",
+                   help="Routed (bf16) calls keep FP8 weights and switch off only activation quantizers")
     p.add_argument("--free-running", action="store_true", help="Also report end-to-end action drift (secondary)")
     p.add_argument("--save-actions", action="store_true", help="With --free-running: store both runs' raw actions in the JSON")
     p.add_argument("--out", help="Parity JSON path")
@@ -482,7 +491,8 @@ def main():
 
         video_t_max = last_t(va_server.scheduler, cfg.num_inference_steps, args.bf16_last_video_steps)
         action_t_max = last_t(va_server.action_scheduler, cfg.action_num_inference_steps, args.bf16_last_action_steps)
-        policy = Bf16CallPolicy(test, args.bf16_cache_writes, args.bf16_first_chunk_video, video_t_max, action_t_max)
+        policy = Bf16CallPolicy(test, args.bf16_cache_writes, args.bf16_first_chunk_video, video_t_max, action_t_max,
+                                keep_fp8_weights=args.routed_keep_fp8_weights)
         print(f"bf16 calls: cache_writes={args.bf16_cache_writes} first_chunk_video={args.bf16_first_chunk_video} "
               f"video t<={video_t_max} action t<={action_t_max} "
               f"({len(policy.quantizers)} quantizers switched off for those calls)")
